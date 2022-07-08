@@ -3,16 +3,23 @@ spring:
     # 应用名称
     name: imc-message-center
 
+  # 数据源配置
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/imc?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username:
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
 server:
   # http端口号
   port: 8000
 
-# mongodb配置
-mongodb:
-  addr: 127.0.0.1
-  port: 27017
-  #ring_log数据库管理角色的账户及密码，为空默认mongodb没有密码（不要填admin和root账户的）
-  user:
-  pwd:
-  #数据库名称
-  database: imc_message_center
+# MyBatis-Plus配置
+mybatis-plus:
+  configuration:
+    # 使用jdbc的getGenerateKeys获取数据库自增主键值
+    use-generated-keys: true
+    # 使用列标签替换列别名 默认true
+    use-column-label: true
+    # 开启驼峰命名转换：Table{create_time} -> Entity{createTime}
+    map-underscore-to-camel-case: true
