@@ -1,8 +1,10 @@
 package com.dpwgc.message.center.infrastructure.dal.chat.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
-import com.dpwgc.message.center.sdk.command.chat.message.MessageDTO;
-
+@Data
+@TableName("imc_chat_message")
 public class MessagePO {
     /**
      * 消息id
@@ -47,17 +49,4 @@ public class MessagePO {
      * 消息当前状态（1-正常，0-已撤回）
      */
     private int status;
-
-    protected MessageDTO create(String appId, String groupId, String userId, String content) {
-
-        this.createTime = System.currentTimeMillis();
-        this.status = 1;
-
-        this.appId = appId;
-        this.groupId = groupId;
-        this.userId = userId;
-        this.content = content;
-
-        return this;
-    }
 }

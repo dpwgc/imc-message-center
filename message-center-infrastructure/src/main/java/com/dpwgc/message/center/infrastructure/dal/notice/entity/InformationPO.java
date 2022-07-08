@@ -1,7 +1,10 @@
 package com.dpwgc.message.center.infrastructure.dal.notice.entity;
 
-import com.dpwgc.message.center.sdk.command.notice.information.InformationDTO;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
+@Data
+@TableName("imc_notice_information")
 public class InformationPO {
     /**
      * 通知信息id
@@ -57,20 +60,4 @@ public class InformationPO {
      * 通知信息类型（自定义，例如：1-置顶，2-精华，3-普通）
      */
     private int type;
-
-    protected InformationDTO create(String appId, String groupId, String userId, String title, String content, String jumpURL, int type) {
-
-        this.createTime = System.currentTimeMillis();
-        this.status = 1;
-
-        this.appId = appId;
-        this.groupId = groupId;
-        this.userId = userId;
-        this.title = title;
-        this.content = content;
-        this.jumpURL = jumpURL;
-        this.type = type;
-
-        return this;
-    }
 }
