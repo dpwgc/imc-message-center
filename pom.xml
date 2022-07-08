@@ -5,8 +5,8 @@
     <groupId>com.dpwgc</groupId>
     <artifactId>message-center</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>message-center</name>
-    <description>message-center</description>
+
+    <packaging>pom</packaging>
 
     <properties>
         <java.version>1.8</java.version>
@@ -26,8 +26,44 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-parent</artifactId>
+            <type>pom</type>
+            <scope>import</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>3.12.11</version>
+        </dependency>
+
+        <!-- 项目模块包 -->
+        <dependency>
+            <groupId>com.dpwgc</groupId>
+            <artifactId>message-center-ui</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dpwgc</groupId>
+            <artifactId>message-center-app</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dpwgc</groupId>
+            <artifactId>message-center-domain</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dpwgc</groupId>
+            <artifactId>message-center-infrastructure</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dpwgc</groupId>
+            <artifactId>message-center-sdk</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
