@@ -46,7 +46,7 @@ public class Message {
      */
     private int status;
 
-    protected Message create(String appId,String groupId, String userId, String content) {
+    protected Message create(String appId, String groupId, String userId, String content) {
 
         this.createTime = System.currentTimeMillis();
         this.status = 1;

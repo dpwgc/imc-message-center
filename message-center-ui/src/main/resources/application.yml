@@ -1,0 +1,18 @@
+spring:
+  application:
+    # 应用名称
+    name: imc-message-center
+
+server:
+  # http端口号
+  port: 8000
+
+# mongodb配置
+mongodb:
+  addr: 127.0.0.1
+  port: 27017
+  #ring_log数据库管理角色的账户及密码，为空默认mongodb没有密码（不要填admin和root账户的）
+  user:
+  pwd:
+  #数据库名称
+  database: imc_message_center

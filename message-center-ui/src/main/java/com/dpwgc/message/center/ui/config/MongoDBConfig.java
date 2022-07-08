@@ -51,8 +51,6 @@ public class MongoDBConfig implements InitializingBean {
             MongoCredential credential = MongoCredential.createCredential(user, database, pwd.toCharArray());
             db = MongoDBUtil.connDB(addr,port,database,credential);
         }
-
-        System.out.println("mongodb database:"+db.toString());
     }
 
     /**
