@@ -1,4 +1,6 @@
 package com.dpwgc.message.center.infrastructure.dal.chat.mapper.impl;
 
-public class MessageMapperImpl {
+import com.dpwgc.message.center.infrastructure.dal.chat.mapper.MessageMapper;
+
+public class MessageMapperImpl implements MessageMapper {
 }

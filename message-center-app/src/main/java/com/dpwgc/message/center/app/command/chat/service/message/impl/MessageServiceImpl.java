@@ -1,4 +1,8 @@
 package com.dpwgc.message.center.app.command.chat.service.message.impl;
 
-public class MessageServiceImpl {
+import com.dpwgc.message.center.app.command.chat.service.message.MessageService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MessageServiceImpl implements MessageService {
 }
