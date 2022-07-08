@@ -1,6 +1,9 @@
 package com.dpwgc.message.center.sdk.command.chat.message;
 
 
+import lombok.Data;
+
+@Data
 public class MessageDTO {
     /**
      * 消息id
