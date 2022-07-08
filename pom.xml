@@ -40,34 +40,6 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <!-- 项目模块包 -->
-        <dependency>
-            <groupId>com.dpwgc</groupId>
-            <artifactId>message-center-ui</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dpwgc</groupId>
-            <artifactId>message-center-app</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dpwgc</groupId>
-            <artifactId>message-center-domain</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dpwgc</groupId>
-            <artifactId>message-center-infrastructure</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dpwgc</groupId>
-            <artifactId>message-center-sdk</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
