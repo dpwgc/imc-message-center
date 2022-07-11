@@ -1,5 +1,8 @@
 package com.dpwgc.message.center.sdk.command.notice.information;
 
+import lombok.Data;
+
+@Data
 public class InformationCommand {
     /**
      * 通知信息id
@@ -44,7 +47,7 @@ public class InformationCommand {
     /**
      * 通知信息点击后的跳转链接
      */
-    private String jumpURL;
+    private String jumpUrl;
 
     /**
      * 通知信息当前状态（1-正常，0-已删除）
@@ -55,4 +58,6 @@ public class InformationCommand {
      * 通知信息类型（自定义，例如：1-置顶，2-精华，3-普通）
      */
     private int type;
+
+
 }

@@ -1,5 +1,6 @@
 package com.dpwgc.message.center.infrastructure.repository.chat;
 
+import com.dpwgc.message.center.domain.chat.message.Message;
 import com.dpwgc.message.center.domain.chat.message.MessageRepository;
 import com.dpwgc.message.center.sdk.command.chat.message.MessageDTO;
 
@@ -8,7 +9,7 @@ import java.util.List;
 public class MessageRepositoryImpl implements MessageRepository {
 
     @Override
-    public boolean save(MessageDTO messageDTO) {
+    public boolean save(Message message) {
         return false;
     }
     @Override

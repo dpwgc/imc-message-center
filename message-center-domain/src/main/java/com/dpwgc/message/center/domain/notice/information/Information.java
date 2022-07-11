@@ -1,5 +1,8 @@
 package com.dpwgc.message.center.domain.notice.information;
 
+import lombok.Data;
+
+@Data
 public class Information {
     /**
      * 通知信息id
@@ -56,11 +59,12 @@ public class Information {
      */
     private int type;
 
-    protected Information create(String appId, String groupId, String userId, String title, String content, String jumpURL, int type) {
+    protected Information create(String informationId, String appId, String groupId, String userId, String title, String content, String jumpURL, int type) {
 
         this.createTime = System.currentTimeMillis();
         this.status = 1;
 
+        this.informationId = informationId;
         this.appId = appId;
         this.groupId = groupId;
         this.userId = userId;

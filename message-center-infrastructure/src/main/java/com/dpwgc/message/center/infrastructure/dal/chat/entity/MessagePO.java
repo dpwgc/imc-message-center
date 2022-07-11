@@ -40,12 +40,12 @@ public class MessagePO {
     /**
      * 消息创建时间戳（毫秒级）
      */
-    private long createTime;
+    private Long createTime;
 
     /**
      * 消息撤回时间戳（毫秒级）
      */
-    private long recallTime;
+    private Long recallTime;
 
     /**
      * 消息撤回原因（谁撤回了消息）
@@ -55,5 +55,5 @@ public class MessagePO {
     /**
      * 消息当前状态（1-正常，0-已撤回）
      */
-    private int status;
+    private Integer status;
 }

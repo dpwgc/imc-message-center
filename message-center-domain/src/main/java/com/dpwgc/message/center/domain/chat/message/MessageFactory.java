@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageFactory {
 
-    public Message create(String appId, String groupId, String userId, String content) {
-        return new Message().create(appId,groupId, userId, content);
+    public Message create(String messageId, String appId, String groupId, String userId, String content, Long createTime) {
+        return new Message().create(messageId,appId,groupId, userId, content,createTime);
     }
 }

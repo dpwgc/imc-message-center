@@ -34,12 +34,12 @@ public class InformationDTO {
     /**
      * 通知信息创建时间戳（毫秒级）
      */
-    private long createTime;
+    private Long createTime;
 
     /**
      * 通知信息删除时间戳（毫秒级）
      */
-    private long deleteTime;
+    private Long deleteTime;
 
     /**
      * 通知信息点击后的跳转链接
@@ -49,10 +49,10 @@ public class InformationDTO {
     /**
      * 通知信息当前状态（1-正常，0-已删除）
      */
-    private int status;
+    private Integer status;
 
     /**
      * 通知信息类型（自定义，例如：1-置顶，2-精华，3-普通）
      */
-    private int type;
+    private Integer type;
 }

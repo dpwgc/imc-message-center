@@ -1,6 +1,9 @@
 package com.dpwgc.message.center.domain.chat.message;
 
 
+import lombok.Data;
+
+@Data
 public class Message {
     /**
      * 消息id
@@ -46,11 +49,12 @@ public class Message {
      */
     private int status;
 
-    protected Message create(String appId, String groupId, String userId, String content) {
+    protected Message create(String messageId, String appId, String groupId, String userId, String content, Long createTime) {
 
-        this.createTime = System.currentTimeMillis();
+        this.createTime = createTime;
         this.status = 1;
 
+        this.messageId = messageId;
         this.appId = appId;
         this.groupId = groupId;
         this.userId = userId;

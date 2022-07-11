@@ -1,10 +1,12 @@
 package com.dpwgc.message.center.ui.controller.chat;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dpwgc.message.center.app.command.chat.service.message.MessageService;
 import com.dpwgc.message.center.app.handler.RedisEventHandler;
 import com.dpwgc.message.center.domain.chat.message.MessageFactory;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import com.dpwgc.message.center.infrastructure.util.RedisUtil;
+import com.dpwgc.message.center.sdk.command.chat.message.MessageCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
@@ -28,12 +30,19 @@ public class MessageWebsocket {
     //Redis工具类（交由IOC自动注入）
     private static RedisUtil redisUtil;
 
+    private static MessageService messageService;
+
     //Redis订阅监听器设置（交由IOC自动注入）
     private static RedisMessageListenerContainer redisMessageListenerContainer;
 
     @Autowired
     public void setRepository(RedisUtil redisUtil) {
         MessageWebsocket.redisUtil = redisUtil;
+    }
+
+    @Autowired
+    public void setRepository(MessageService messageService) {
+        MessageWebsocket.messageService = messageService;
     }
 
     @Autowired
@@ -78,19 +87,31 @@ public class MessageWebsocket {
     @OnMessage
     public void onMessage(String content, @PathParam(value = "appId") String appId, @PathParam(value = "groupId") String groupId,@PathParam(value = "userId") String userId) {
 
-        //创建消息模板
-        MessageFactory messageFactory = new MessageFactory();
-        Message message = messageFactory.create(appId,groupId,userId,content);
-
-        //将Message对象转为json字符串
-        String jsonStr = JSONObject.toJSON(message).toString();
+        //获取消息
+        MessageCommand command = new MessageCommand();
+        command.setAppId(appId);
+        command.setGroupId(groupId);
+        command.setUserId(userId);
+        command.setContent(content);
+        command.setCreateTime(System.currentTimeMillis());
 
         /**
          * 将消息插入mysql或消息队列 TODO
          */
+        //在数据层插入消息
+        String messageId = messageService.createMessage(command);
 
-        //在redis中发布消息
-        redisUtil.pub("mq:"+groupId,jsonStr);
+        //如果插入成功，则会返回messageId
+        if(messageId.length() > 0) {
+
+            command.setMessageId(messageId);
+
+            //将MessageCommand对象转为json字符串
+            String jsonStr = JSONObject.toJSON(command).toString();
+
+            //在redis中发布消息
+            redisUtil.pub("mq:"+groupId,jsonStr);
+        }
     }
 
     //错误时调用

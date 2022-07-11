@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class InformationFactory {
 
-    public Information create(String appId, String groupId, String userId, String title, String content, String jumpURL, int type) {
-        return new Information().create(appId,groupId,userId,title,content,jumpURL,type);
+    public Information create(String informationId, String appId, String groupId, String userId, String title, String content, String jumpURL, int type) {
+        return new Information().create(informationId,appId,groupId,userId,title,content,jumpURL,type);
     }
 }

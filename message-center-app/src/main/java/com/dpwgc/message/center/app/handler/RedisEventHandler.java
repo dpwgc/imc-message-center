@@ -1,6 +1,7 @@
 package com.dpwgc.message.center.app.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.stereotype.Component;
@@ -51,7 +52,7 @@ public class RedisEventHandler implements MessageListener {
                     }
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                LogUtil.error(e.toString());
             }
         }
     }
