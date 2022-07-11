@@ -16,12 +16,9 @@ public class MessageRepositoryImpl implements MessageRepository {
     @Resource
     MessageMapper messageMapper;
 
-    @Resource
-    MessagePOAssembler messagePOAssembler;
-
     @Override
     public boolean save(Message message) {
-        MessagePO messagePO = messagePOAssembler.assemblerMessagePO(message);
+        MessagePO messagePO = MessagePOAssembler.INSTANCE.assemblerMessagePO(message);
         return messageMapper.insert(messagePO) > 0;
     }
     @Override
