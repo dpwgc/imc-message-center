@@ -3,9 +3,11 @@ package com.dpwgc.message.center.infrastructure.repository.chat;
 import com.dpwgc.message.center.domain.chat.message.Message;
 import com.dpwgc.message.center.domain.chat.message.MessageRepository;
 import com.dpwgc.message.center.sdk.command.chat.message.MessageDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class MessageRepositoryImpl implements MessageRepository {
 
     @Override

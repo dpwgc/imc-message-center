@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @ServerEndpoint("/chat/{appId}/{groupId}/{userId}")
 @Component
-public class MessageWebsocket {
+public class MessageWebSocket {
 
     private static MessageService messageService;
 
@@ -31,12 +31,12 @@ public class MessageWebsocket {
 
     @Autowired
     public void setRepository(MessageService messageService) {
-        MessageWebsocket.messageService = messageService;
+        MessageWebSocket.messageService = messageService;
     }
 
     @Autowired
     public void setRepository(RedisMessageListenerContainer redisMessageListenerContainer) {
-        MessageWebsocket.redisMessageListenerContainer = redisMessageListenerContainer;
+        MessageWebSocket.redisMessageListenerContainer = redisMessageListenerContainer;
     }
 
     //Redis订阅推送消息服务（设为静态，仅在本类加载时调用一次）
@@ -46,7 +46,7 @@ public class MessageWebsocket {
     private static final ConcurrentHashMap<String, Boolean> redisListenMap = new ConcurrentHashMap<>();
 
     //concurrent包的线程安全Set，用来存放每个客户端对应的WebSocketServer对象。
-    private static ConcurrentHashMap<String, Session> sessionPools = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, Session> sessionPools = new ConcurrentHashMap<>();
 
     /**
      * 给指定用户发送信息

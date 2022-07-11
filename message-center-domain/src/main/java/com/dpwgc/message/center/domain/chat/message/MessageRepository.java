@@ -1,7 +1,6 @@
 package com.dpwgc.message.center.domain.chat.message;
 
 import com.dpwgc.message.center.sdk.command.chat.message.MessageDTO;
-
 import java.util.List;
 
 public interface MessageRepository {

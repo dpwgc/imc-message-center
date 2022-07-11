@@ -26,6 +26,7 @@ public class MessageServiceImpl implements MessageService {
     @Resource
     MessageRepository messageRepository;
 
+
     @Override
     public boolean createMessage(CreateMessageWsCommand command,String appId,String groupId,String userId) {
 

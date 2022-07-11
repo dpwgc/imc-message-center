@@ -2,9 +2,11 @@ package com.dpwgc.message.center.infrastructure.repository.notice;
 
 import com.dpwgc.message.center.domain.notice.information.InformationRepository;
 import com.dpwgc.message.center.sdk.command.notice.information.InformationDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class InformationRepositoryImpl implements InformationRepository {
 
     @Override
