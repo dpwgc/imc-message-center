@@ -5,10 +5,12 @@ import lombok.Data;
 
 @Data
 public class MessageDTO {
+
     /**
      * 消息id
      */
     private String messageId;
+
     /**
      * 消息所属应用id
      */

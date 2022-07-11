@@ -3,7 +3,7 @@ package com.dpwgc.message.center.app.handler;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
-import com.dpwgc.message.center.sdk.command.chat.message.MessageCommand;
+import com.dpwgc.message.center.sdk.command.chat.message.MessageDTO;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.stereotype.Component;
@@ -29,8 +29,7 @@ public class RedisEventHandler implements MessageListener {
     @Override
     public void onMessage(Message message, byte[] pattern) {
 
-        String content = new String(message.getBody()); //消息内容（JSON字符串）
-        String topic = new String(pattern);             //消息主题（broadcast-{appId}）
+        String msg = new String(message.getBody()); //消息内容（MessageDTO - JSON字符串）
 
         //遍历当前在线的会话key列表
         for (String sessionKey: sessionPools.keySet()) {
@@ -47,16 +46,16 @@ public class RedisEventHandler implements MessageListener {
 
             try {
                 //JSON字符串转成JSON对象
-                JSONObject jsonObject = (JSONObject) JSONObject.toJSON(content);
+                JSONObject jsonObject = (JSONObject) JSONObject.toJSON(msg);
 
                 //JSON对象转换成Java对象
-                MessageCommand command = JSONObject.toJavaObject(jsonObject, MessageCommand.class);
+                MessageDTO messageDTO = JSONObject.toJavaObject(jsonObject, MessageDTO.class);
 
                 //如果消息与会话属于同一应用&&同一群组
-                if (command.getAppId().equals(session.getPathParameters().get("appId")) && command.getGroupId().equals(session.getPathParameters().get("groupId"))) {
+                if (messageDTO.getAppId().equals(session.getPathParameters().get("appId")) && messageDTO.getGroupId().equals(session.getPathParameters().get("groupId"))) {
                     synchronized (session) {
                         //推送消息
-                        session.getBasicRemote().sendText(JSON.parse(content).toString());
+                        session.getBasicRemote().sendText(JSON.parse(msg).toString());
                     }
                 }
             } catch (IOException e) {

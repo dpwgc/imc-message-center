@@ -49,9 +49,9 @@ public class Message {
      */
     private int status;
 
-    protected Message create(String messageId, String appId, String groupId, String userId, String content, Long createTime) {
+    protected Message create(String messageId, String appId, String groupId, String userId, String content) {
 
-        this.createTime = createTime;
+        this.createTime = System.currentTimeMillis();
         this.status = 1;
 
         this.messageId = messageId;
