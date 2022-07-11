@@ -10,9 +10,21 @@ spring:
   # 数据源配置
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/imc?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-    username: xxx
-    password: xxxxxx
+    username: xxxx
+    password: xxxxxxxx
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+  redis:
+    database: 3
+    host: 127.0.0.1
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 10
+        max-idle: 8
+        min-idle: 0
+        max-wait: 60s
 
 # 雪花id生成
 snowflake:
