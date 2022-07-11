@@ -1,7 +1,7 @@
 package com.dpwgc.message.center.ui.controller.chat;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dpwgc.message.center.app.command.chat.service.message.MessageService;
+import com.dpwgc.message.center.app.command.chat.service.message.MessageCommandService;
 import com.dpwgc.message.center.app.handler.RedisEventHandler;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import com.dpwgc.message.center.sdk.base.ResultDTO;
@@ -25,14 +25,14 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class MessageWebSocket {
 
-    private static MessageService messageService;
+    private static MessageCommandService messageCommandService;
 
     //Redis订阅监听器设置（交由IOC自动注入）
     private static RedisMessageListenerContainer redisMessageListenerContainer;
 
     @Autowired
-    public void setRepository(MessageService messageService) {
-        MessageWebSocket.messageService = messageService;
+    public void setRepository(MessageCommandService messageCommandService) {
+        MessageWebSocket.messageCommandService = messageCommandService;
     }
 
     @Autowired
@@ -122,7 +122,7 @@ public class MessageWebSocket {
          */
         String sessionKey = appId.concat("-").concat(groupId).concat("-").concat(userId);
         //在数据层插入消息
-        if (messageService.createMessage(command,appId,groupId,userId)) {
+        if (messageCommandService.createMessage(command,appId,groupId,userId)) {
             //回应客户端-消息发送成功
             sendInfo(sessionKey,ResultDTO.getSuccessResult("").toString());
         } else {
