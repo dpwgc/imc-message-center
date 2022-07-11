@@ -21,7 +21,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
 
     /**
-     * Redis监听器配置
+     * Redis监听器注入
      */
     @Bean
     RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory,
@@ -34,7 +34,6 @@ public class RedisConfig {
         container.setConnectionFactory(lettuceConnectionFactory);
         return container;
     }
-
     @Bean
     MessageListenerAdapter listenerAdapter(RedisEventHandler redisEventHandler) {
         return new MessageListenerAdapter(redisEventHandler);

@@ -49,16 +49,8 @@ public class MessageDTO {
      */
     private int status;
 
-    public MessageDTO create(String appId, String groupId, String userId, String content) {
-
-        this.createTime = System.currentTimeMillis();
-        this.status = 1;
-
-        this.appId = appId;
-        this.groupId = groupId;
-        this.userId = userId;
-        this.content = content;
-
-        return this;
-    }
+    /**
+     * 消息类型（自定义）
+     */
+    private int type;
 }

@@ -55,20 +55,4 @@ public class InformationCommand {
      * 通知信息类型（自定义，例如：1-置顶，2-精华，3-普通）
      */
     private int type;
-
-    protected InformationCommand create(String appId, String groupId, String userId, String title, String content, String jumpURL, int type) {
-
-        this.createTime = System.currentTimeMillis();
-        this.status = 1;
-
-        this.appId = appId;
-        this.groupId = groupId;
-        this.userId = userId;
-        this.title = title;
-        this.content = content;
-        this.jumpURL = jumpURL;
-        this.type = type;
-
-        return this;
-    }
 }
