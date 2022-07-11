@@ -56,4 +56,8 @@ public class MessageCommandServiceImpl implements MessageCommandService {
         }
         return false;
     }
+
+    public boolean recallMessage(String messageId) {
+        return messageRepository.recall(messageId);
+    }
 }

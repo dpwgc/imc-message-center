@@ -1,9 +1,12 @@
 package com.dpwgc.message.center.ui.controller.chat;
 
+import com.dpwgc.message.center.app.command.chat.service.message.MessageCommandService;
 import com.dpwgc.message.center.app.query.chat.message.MessageQueryService;
+import com.dpwgc.message.center.domain.chat.message.Message;
 import com.dpwgc.message.center.sdk.base.ResultDTO;
 import com.dpwgc.message.center.sdk.command.chat.message.MessageDTO;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +19,17 @@ public class MessageController {
 
     @Resource
     MessageQueryService messageQueryService;
+
+    @Resource
+    MessageCommandService messageCommandService;
+
+    @PutMapping("/recallMessage")
+    public ResultDTO<String> recallMessage(String messageId) {
+        if (messageCommandService.recallMessage(messageId)) {
+            return ResultDTO.getSuccessResult("1");
+        }
+        return ResultDTO.getFailureResult("0");
+    }
 
     @GetMapping("/findByGroupId")
     public ResultDTO<List<MessageDTO>> findByGroupId(String appId, String groupId, Long startTime, Long endTime, Integer pageNum, Integer pageSize) {
