@@ -1,5 +1,7 @@
 package com.dpwgc.message.center.sdk.base;
 
+import com.alibaba.fastjson.JSONObject;
+
 public class ResultDTO<T> {
     protected boolean success;
     protected Integer code;
@@ -62,6 +64,6 @@ public class ResultDTO<T> {
     }
 
     public String toString() {
-        return "ResultDTO(success=" + this.isSuccess() + ", code=" + this.getCode() + ", message=" + this.getMessage() + ", data=" + this.getData() + ")";
+        return JSONObject.toJSON(this).toString();
     }
 }

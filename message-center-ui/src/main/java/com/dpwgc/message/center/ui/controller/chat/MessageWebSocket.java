@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.dpwgc.message.center.app.command.chat.service.message.MessageService;
 import com.dpwgc.message.center.app.handler.RedisEventHandler;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
+import com.dpwgc.message.center.sdk.base.ResultDTO;
 import com.dpwgc.message.center.sdk.command.chat.message.CreateMessageWsCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.listener.PatternTopic;
@@ -91,6 +92,7 @@ public class MessageWebSocket {
         //设置Redis订阅/发布管道的key（broadcast-{appId}）
         //设置Redis订阅/发布监听器，监听推送该群组的消息
         String redisMQKey = "broadcast-".concat(appId);
+
         if (redisListenMap.get(redisMQKey) == null) {
             //如果当前这个主题没有被订阅，则建立监听器。
             redisMessageListenerContainer.addMessageListener(redisEventHandler,new PatternTopic(redisMQKey));
@@ -99,18 +101,18 @@ public class MessageWebSocket {
             LogUtil.info("subscribed to redis channel: ".concat(redisMQKey));
         }
 
+        //回应客户端-连接成功
+        sendInfo(sessionKey,ResultDTO.getSuccessResult("").toString());
     }
 
     /**
      * 收到客户端信息
      */
     @OnMessage
-    public void onMessage(String content, @PathParam(value = "appId") String appId, @PathParam(value = "groupId") String groupId,@PathParam(value = "userId") String userId) {
-
-        //获取消息
+    public void onMessage(String msg, @PathParam(value = "appId") String appId, @PathParam(value = "groupId") String groupId,@PathParam(value = "userId") String userId) {
 
         //JSON字符串转成JSON对象
-        JSONObject jsonObject = (JSONObject) JSONObject.toJSON(content);
+        JSONObject jsonObject = (JSONObject) JSONObject.parse(msg);
 
         //JSON对象转换成Java对象
         CreateMessageWsCommand command = JSONObject.toJavaObject(jsonObject, CreateMessageWsCommand.class);
@@ -121,18 +123,21 @@ public class MessageWebSocket {
         String sessionKey = appId.concat("-").concat(groupId).concat("-").concat(userId);
         //在数据层插入消息
         if (messageService.createMessage(command,appId,groupId,userId)) {
-            //回应200-表示消息发送成功
-            sendInfo(sessionKey,"200");
+            //回应客户端-消息发送成功
+            sendInfo(sessionKey,ResultDTO.getSuccessResult("").toString());
         } else {
-            //回应400-表示消息发送失败
-            sendInfo(sessionKey,"400");
+            //回应客户端-消息发送失败
+            sendInfo(sessionKey,ResultDTO.getFailureResult("").toString());
         }
     }
 
     //错误时调用
     @OnError
     public void onError(Session session, Throwable throwable) throws IOException {
-        LogUtil.error(throwable.toString());
+        String err = throwable.toString();
+        LogUtil.error(err);
+        //回应客户端-连接异常
+        sendMessage(session,ResultDTO.getFailureResult(err).toString());
         //关闭对话
         session.close();
     }
