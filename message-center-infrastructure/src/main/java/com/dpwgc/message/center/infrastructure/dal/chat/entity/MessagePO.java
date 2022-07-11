@@ -6,10 +6,17 @@ import lombok.Data;
 @Data
 @TableName("imc_chat_message")
 public class MessagePO {
+
+    /**
+     * 自增id
+     */
+    private Long id;
+
     /**
      * 消息id
      */
-    private String id;
+    private String messageId;
+
     /**
      * 消息所属应用id
      */

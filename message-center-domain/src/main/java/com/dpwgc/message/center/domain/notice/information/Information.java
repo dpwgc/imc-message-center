@@ -4,7 +4,7 @@ public class Information {
     /**
      * 通知信息id
      */
-    private String id;
+    private String informationId;
 
     /**
      * 通知信息所属应用id

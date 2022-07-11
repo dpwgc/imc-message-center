@@ -5,7 +5,7 @@ public class Message {
     /**
      * 消息id
      */
-    private String id;
+    private String messageId;
     /**
      * 消息所属应用id
      */

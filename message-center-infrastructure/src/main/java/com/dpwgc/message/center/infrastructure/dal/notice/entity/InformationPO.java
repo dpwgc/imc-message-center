@@ -6,10 +6,16 @@ import lombok.Data;
 @Data
 @TableName("imc_notice_information")
 public class InformationPO {
+
+    /**
+     * 自增id
+     */
+    private Long id;
+
     /**
      * 通知信息id
      */
-    private String id;
+    private String informationId;
 
     /**
      * 通知信息所属应用id
