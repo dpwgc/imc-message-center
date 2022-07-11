@@ -1,3 +1,7 @@
+server:
+  # http端口号
+  port: 8000
+
 spring:
   application:
     # 应用名称
@@ -6,13 +10,16 @@ spring:
   # 数据源配置
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/imc?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-    username:
-    password:
+    username: xxx
+    password: xxxxxx
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-server:
-  # http端口号
-  port: 8000
+# 雪花id生成
+snowflake:
+  # 数据中心id
+  datacenterId: 1
+  # 机器id
+  workerId: 0
 
 # MyBatis-Plus配置
 mybatis-plus:
