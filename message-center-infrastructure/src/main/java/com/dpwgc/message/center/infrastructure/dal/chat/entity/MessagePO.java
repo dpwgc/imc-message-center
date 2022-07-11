@@ -56,4 +56,9 @@ public class MessagePO {
      * 消息当前状态（1-正常，0-已撤回）
      */
     private Integer status;
+
+    /**
+     * 消息类型（自定义）
+     */
+    private Integer type;
 }

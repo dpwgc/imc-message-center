@@ -49,7 +49,12 @@ public class Message {
      */
     private int status;
 
-    protected Message create(String messageId, String appId, String groupId, String userId, String content) {
+    /**
+     * 消息类型（自定义）
+     */
+    private Integer type;
+
+    protected Message create(String messageId, String appId, String groupId, String userId, String content, Integer type) {
 
         this.createTime = System.currentTimeMillis();
         this.status = 1;
@@ -59,6 +64,7 @@ public class Message {
         this.groupId = groupId;
         this.userId = userId;
         this.content = content;
+        this.type = type;
 
         return this;
     }

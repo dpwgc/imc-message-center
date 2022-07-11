@@ -2,8 +2,11 @@ package com.dpwgc.message.center.app.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.toolkit.sql.StringEscape;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import com.dpwgc.message.center.sdk.command.chat.message.MessageDTO;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.stereotype.Component;
@@ -45,8 +48,12 @@ public class RedisEventHandler implements MessageListener {
             }
 
             try {
+                //序列化字符串
+                String msgStr = StringEscapeUtils.unescapeJava(msg);
+                msgStr = StringUtils.strip(msgStr,"\"\""); //这里去除redis字符串两端的冒号
+
                 //JSON字符串转成JSON对象
-                JSONObject jsonObject = (JSONObject) JSONObject.toJSON(msg);
+                JSONObject jsonObject = (JSONObject) JSONObject.parse(StringEscapeUtils.unescapeJava(msgStr));//这里使用StringEscapeUtils去除转义斜杠
 
                 //JSON对象转换成Java对象
                 MessageDTO messageDTO = JSONObject.toJavaObject(jsonObject, MessageDTO.class);

@@ -1,6 +1,7 @@
 package com.dpwgc.message.center.app.command.chat.service.message.impl;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
+import com.dpwgc.message.center.app.command.chat.assembler.MessageAssembler;
 import com.dpwgc.message.center.app.command.chat.service.message.MessageService;
 import com.dpwgc.message.center.domain.chat.message.Message;
 import com.dpwgc.message.center.domain.chat.message.MessageFactory;
@@ -26,33 +27,25 @@ public class MessageServiceImpl implements MessageService {
     @Resource
     MessageRepository messageRepository;
 
+    @Resource
+    MessageAssembler messageAssembler;
+
 
     @Override
     public boolean createMessage(CreateMessageWsCommand command,String appId,String groupId,String userId) {
 
-        //构建MessageDTO对象
-        MessageDTO messageDTO = new MessageDTO();
-
-        messageDTO.setAppId(appId);
-        messageDTO.setGroupId(groupId);
-        messageDTO.setUserId(userId);
-
-        messageDTO.setContent(command.getContent());
-        messageDTO.setType(command.getType());
-
         //创建Message对象
         MessageFactory messageFactory = new MessageFactory();
-        Message message = messageFactory.create(snowUtil.nextIdString(),messageDTO.getAppId(),messageDTO.getGroupId(),messageDTO.getUserId(),messageDTO.getContent());
+        Message message = messageFactory.create(snowUtil.nextIdString(),appId,groupId,userId,command.getContent(),command.getType());
 
         //成功插入数据层
         if (messageRepository.save(message)) {
 
-            messageDTO.setMessageId(message.getMessageId());
-            messageDTO.setCreateTime(message.getCreateTime());
-            messageDTO.setStatus(message.getStatus());
+            //构建MessageDTO对象
+            MessageDTO messageDTO = messageAssembler.assembleMessageDTO(message);
 
             //将MessageDTO对象转为json字符串
-            String jsonStr = JSONObject.toJSON(messageDTO).toString();
+            String jsonStr = JSON.parse(messageDTO.toString()).toString();
 
             //在redis管道中发布消息
             redisUtil.pub("broadcast-".concat(appId),jsonStr);
