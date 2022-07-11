@@ -11,4 +11,6 @@ public interface MessagePOAssembler {
     MessagePOAssembler INSTANCE = Mappers.getMapper(MessagePOAssembler.class);
 
     MessagePO assemblerMessagePO(Message message);
+
+    Message assemblerMessage(MessagePO messagePO);
 }

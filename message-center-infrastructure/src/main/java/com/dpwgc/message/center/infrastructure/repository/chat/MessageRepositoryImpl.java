@@ -22,7 +22,7 @@ public class MessageRepositoryImpl implements MessageRepository {
         return messageMapper.insert(messagePO) > 0;
     }
     @Override
-    public boolean recall(String messageId) {
+    public Message recall(String messageId,String recallCause) {
 
         //获取消息
         QueryWrapper<MessagePO> queryOrder = new QueryWrapper<>();
@@ -32,13 +32,18 @@ public class MessageRepositoryImpl implements MessageRepository {
 
         //如果查不到此消息
         if(messagePO == null){
-            return false;
+            return null;
         }
 
         //将该消息设为撤回状态
         messagePO.setStatus(0);
+        messagePO.setRecallTime(System.currentTimeMillis());
+        messagePO.setRecallCause(recallCause);
 
-        //更新订单
-        return messageMapper.update(messagePO,queryOrder) > 0;
+        //如果更新成功
+        if (messageMapper.update(messagePO,queryOrder) > 0) {
+            return MessagePOAssembler.INSTANCE.assemblerMessage(messagePO);
+        }
+        return null;
     }
 }

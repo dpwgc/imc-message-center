@@ -57,7 +57,23 @@ public class MessageCommandServiceImpl implements MessageCommandService {
         return false;
     }
 
-    public boolean recallMessage(String messageId) {
-        return messageRepository.recall(messageId);
+    public boolean recallMessage(String messageId,String recallCause) {
+        Message message = messageRepository.recall(messageId,recallCause);
+
+        if (message != null) {
+            //构建MessageDTO对象
+            MessageDTO messageDTO = messageAssembler.assembleMessageDTO(message);
+
+            //将MessageDTO对象转为json字符串
+            String jsonStr = JSON.parse(messageDTO.toString()).toString();
+
+            //在redis管道中广播撤回信息，告知群组中的所有在线成员该消息已被撤回
+            redisUtil.pub("broadcast-".concat(messageDTO.getAppId()),jsonStr);
+
+            LogUtil.info("recall message: ".concat(jsonStr).concat("/ cause: ").concat(recallCause));
+            return true;
+        }
+
+        return false;
     }
 }
