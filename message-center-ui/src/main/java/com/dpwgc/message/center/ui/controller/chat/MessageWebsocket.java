@@ -3,6 +3,7 @@ package com.dpwgc.message.center.ui.controller.chat;
 import com.alibaba.fastjson.JSONObject;
 import com.dpwgc.message.center.app.handler.RedisEventHandler;
 import com.dpwgc.message.center.domain.chat.message.MessageFactory;
+import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import com.dpwgc.message.center.infrastructure.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.listener.PatternTopic;
@@ -95,7 +96,7 @@ public class MessageWebsocket {
     //错误时调用
     @OnError
     public void onError(Session session, Throwable throwable) throws IOException {
-        throwable.printStackTrace();
+        LogUtil.error(throwable.toString());
         //关闭对话
         session.close();
     }
