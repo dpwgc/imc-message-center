@@ -20,8 +20,8 @@ public class MessageController {
     @Resource
     MessageCommandService messageCommandService;
 
-    @PutMapping("/create")
-    public ResultDTO<String> createMessage(@Validated @RequestBody CreateMessageCommand command) {
+    @PostMapping("/create")
+    public ResultDTO<String> createMessage(@RequestBody CreateMessageCommand command) {
 
         if (messageCommandService.createMessage(command)) {
             return ResultDTO.getSuccessResult("");
