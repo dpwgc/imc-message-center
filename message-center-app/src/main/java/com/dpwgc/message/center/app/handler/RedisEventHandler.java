@@ -2,7 +2,6 @@ package com.dpwgc.message.center.app.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.toolkit.sql.StringEscape;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import com.dpwgc.message.center.sdk.command.chat.message.MessageDTO;
 import org.apache.commons.lang3.StringUtils;

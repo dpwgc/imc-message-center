@@ -11,6 +11,7 @@ import com.dpwgc.message.center.infrastructure.util.RedisUtil;
 import com.dpwgc.message.center.infrastructure.util.SnowUtil;
 import com.dpwgc.message.center.sdk.command.chat.message.CreateMessageWsCommand;
 import com.dpwgc.message.center.sdk.command.chat.message.MessageDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,6 +30,9 @@ public class MessageCommandServiceImpl implements MessageCommandService {
 
     @Resource
     MessageAssembler messageAssembler;
+
+    @Value("${chat.message.recallTimeLimit}")
+    private Long recallTimeLimit;
 
 
     @Override
@@ -61,6 +65,12 @@ public class MessageCommandServiceImpl implements MessageCommandService {
         Message message = messageRepository.recall(messageId,recallCause);
 
         if (message != null) {
+
+            //判断是否超过撤回时限
+            if (System.currentTimeMillis() > message.getCreateTime() + recallTimeLimit) {
+                return false;
+            }
+
             //构建MessageDTO对象
             MessageDTO messageDTO = messageAssembler.assembleMessageDTO(message);
 

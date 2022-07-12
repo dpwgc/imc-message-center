@@ -4,8 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dpwgc.message.center.app.command.chat.assembler.MessageAssembler;
 import com.dpwgc.message.center.app.query.chat.message.MessageQueryService;
-import com.dpwgc.message.center.domain.chat.message.Message;
-import com.dpwgc.message.center.infrastructure.assembler.MessagePOAssembler;
 import com.dpwgc.message.center.infrastructure.dal.chat.entity.MessagePO;
 import com.dpwgc.message.center.infrastructure.dal.chat.mapper.MessageMapper;
 import com.dpwgc.message.center.sdk.command.chat.message.MessageDTO;
