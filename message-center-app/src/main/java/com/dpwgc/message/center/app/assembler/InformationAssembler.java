@@ -1,4 +1,4 @@
-package com.dpwgc.message.center.app.command.notice.assembler;
+package com.dpwgc.message.center.app.assembler;
 
 import com.dpwgc.message.center.domain.notice.information.Information;
 import com.dpwgc.message.center.infrastructure.dal.notice.entity.InformationPO;

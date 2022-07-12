@@ -1,4 +1,4 @@
-package com.dpwgc.message.center.app.command.chat.assembler;
+package com.dpwgc.message.center.app.assembler;
 
 import com.dpwgc.message.center.domain.chat.message.Message;
 import com.dpwgc.message.center.infrastructure.dal.chat.entity.MessagePO;

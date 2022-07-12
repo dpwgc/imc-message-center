@@ -2,16 +2,10 @@ package com.dpwgc.message.center.app.query.notice.information.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.dpwgc.message.center.app.command.chat.assembler.MessageAssembler;
-import com.dpwgc.message.center.app.command.notice.assembler.InformationAssembler;
+import com.dpwgc.message.center.app.assembler.InformationAssembler;
 import com.dpwgc.message.center.app.query.notice.information.InformationQueryService;
-import com.dpwgc.message.center.domain.notice.information.Information;
-import com.dpwgc.message.center.infrastructure.dal.chat.entity.MessagePO;
-import com.dpwgc.message.center.infrastructure.dal.chat.mapper.MessageMapper;
 import com.dpwgc.message.center.infrastructure.dal.notice.entity.InformationPO;
 import com.dpwgc.message.center.infrastructure.dal.notice.mapper.InformationMapper;
-import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
-import com.dpwgc.message.center.sdk.model.chat.message.MessagePageDTO;
 import com.dpwgc.message.center.sdk.model.notice.information.InformationDTO;
 import com.dpwgc.message.center.sdk.model.notice.information.InformationPageDTO;
 import org.springframework.stereotype.Service;

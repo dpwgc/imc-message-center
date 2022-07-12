@@ -1,7 +1,7 @@
 package com.dpwgc.message.center.app.command.chat.service.message.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.dpwgc.message.center.app.command.chat.assembler.MessageAssembler;
+import com.dpwgc.message.center.app.assembler.MessageAssembler;
 import com.dpwgc.message.center.app.command.chat.service.message.MessageCommandService;
 import com.dpwgc.message.center.domain.chat.message.Message;
 import com.dpwgc.message.center.domain.chat.message.MessageFactory;
