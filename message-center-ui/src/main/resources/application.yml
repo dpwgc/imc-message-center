@@ -7,13 +7,14 @@ spring:
     # 应用名称
     name: imc-message-center
 
-  # 数据源配置
+  # 数据源配置（默认使用mariadb，也可换成mysql，两者通用）
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/imc?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-    username: xxxx
-    password: xxxxxxxx
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mariadb://127.0.0.1:3306/imc?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password:
+    driver-class-name: org.mariadb.jdbc.Driver
 
+  # redis配置
   redis:
     database: 3
     host: 127.0.0.1
@@ -26,7 +27,7 @@ spring:
         min-idle: 0
         max-wait: 60s
 
-# 雪花id生成
+# 雪花id配置
 snowflake:
   # 数据中心id
   datacenterId: 1
