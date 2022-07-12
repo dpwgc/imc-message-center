@@ -4,12 +4,14 @@ import com.dpwgc.message.center.app.command.chat.service.message.MessageCommandS
 import com.dpwgc.message.center.app.query.chat.message.MessageQueryService;
 import com.dpwgc.message.center.sdk.base.ResultDTO;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageCommand;
+import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
 import com.dpwgc.message.center.sdk.model.chat.message.MessagePageDTO;
 import com.dpwgc.message.center.sdk.model.chat.message.RecallMessageCommand;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/chat/message")
@@ -66,4 +68,24 @@ public class MessageController {
         return ResultDTO.getFailureResult("null");
     }
 
+    @GetMapping("/findBeforeByMessageId")
+    public ResultDTO<List<MessageDTO>> findBeforeByMessageId(String appId, String groupId, String messageId, Integer pageSize) {
+
+        List<MessageDTO> messageDTOList = messageQueryService.findBeforeByMessageId(appId,groupId,messageId,pageSize);
+
+        if (messageDTOList != null) {
+            return ResultDTO.getSuccessResult(messageDTOList);
+        }
+        return ResultDTO.getFailureResult("null");
+    }
+    @GetMapping("/findAfterByMessageId")
+    public ResultDTO<List<MessageDTO>> findAfterByMessageId(String appId, String groupId, String messageId, Integer pageSize) {
+
+        List<MessageDTO> messageDTOList = messageQueryService.findAfterByMessageId(appId,groupId,messageId,pageSize);
+
+        if (messageDTOList != null) {
+            return ResultDTO.getSuccessResult(messageDTOList);
+        }
+        return ResultDTO.getFailureResult("null");
+    }
 }
