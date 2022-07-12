@@ -1,6 +1,7 @@
 package com.dpwgc.message.center.sdk.model.chat.message;
 
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
 
 @Data
 public class CreateMessageCommand {
@@ -8,16 +9,19 @@ public class CreateMessageCommand {
     /**
      * 消息所属应用id
      */
+    @NotNull
     private String appId;
 
     /**
      * 消息所属群组id
      */
+    @NotNull
     private String groupId;
 
     /**
      * 发送该条消息的用户id
      */
+    @NotNull
     private String userId;
 
     /**

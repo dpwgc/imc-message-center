@@ -4,7 +4,9 @@ import com.dpwgc.message.center.app.command.notice.service.information.Informati
 import com.dpwgc.message.center.app.query.notice.information.InformationQueryService;
 import com.dpwgc.message.center.sdk.base.ResultDTO;
 import com.dpwgc.message.center.sdk.model.notice.information.CreateInformationCommand;
+import com.dpwgc.message.center.sdk.model.notice.information.DeleteInformationCommand;
 import com.dpwgc.message.center.sdk.model.notice.information.InformationPageDTO;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -28,8 +30,8 @@ public class InformationController {
     }
 
     @PostMapping("/delete")
-    public ResultDTO<String> deleteInformation(String informationId) {
-        if (informationCommandService.deleteInformation(informationId)) {
+    public ResultDTO<String> deleteInformation(@Validated @RequestBody DeleteInformationCommand command) {
+        if (informationCommandService.deleteInformation(command.getInformationId())) {
             return ResultDTO.getSuccessResult("");
         }
         return ResultDTO.getFailureResult("");

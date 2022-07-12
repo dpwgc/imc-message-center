@@ -5,6 +5,8 @@ import com.dpwgc.message.center.app.query.chat.message.MessageQueryService;
 import com.dpwgc.message.center.sdk.base.ResultDTO;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageCommand;
 import com.dpwgc.message.center.sdk.model.chat.message.MessagePageDTO;
+import com.dpwgc.message.center.sdk.model.chat.message.RecallMessageCommand;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,7 +22,7 @@ public class MessageController {
     MessageCommandService messageCommandService;
 
     @PostMapping("/create")
-    public ResultDTO<String> createMessage(@RequestBody CreateMessageCommand command) {
+    public ResultDTO<String> createMessage(@Validated @RequestBody CreateMessageCommand command) {
 
         if (messageCommandService.createMessage(command)) {
             return ResultDTO.getSuccessResult("");
@@ -29,8 +31,8 @@ public class MessageController {
     }
 
     @PostMapping("/recall")
-    public ResultDTO<String> recallMessage(String messageId,String recallCause) {
-        if (messageCommandService.recallMessage(messageId,recallCause)) {
+    public ResultDTO<String> recallMessage(@Validated @RequestBody RecallMessageCommand command) {
+        if (messageCommandService.recallMessage(command.getMessageId(), command.getRecallCause())) {
             return ResultDTO.getSuccessResult("");
         }
         return ResultDTO.getFailureResult("");
