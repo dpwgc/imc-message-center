@@ -20,9 +20,6 @@ public class MessageQueryServiceImpl implements MessageQueryService {
     @Resource
     MessageMapper messageMapper;
 
-    @Resource
-    MessageAssembler messageAssembler;
-
     @Override
     public MessagePageDTO findByGroupId(String appId, String groupId, Long startTime, Long endTime, Integer pageNum, Integer pageSize) {
 
@@ -39,7 +36,7 @@ public class MessageQueryServiceImpl implements MessageQueryService {
 
         List<MessageDTO> messageDTOList = new ArrayList<>();
         for (int i=0;i<messagePOPage.getRecords().size();i++) {
-            MessageDTO messageDTO = messageAssembler.assembleMessageDTO(messagePOPage.getRecords().get(i));
+            MessageDTO messageDTO = MessageAssembler.INSTANCE.assembleMessageDTO(messagePOPage.getRecords().get(i));
             messageDTOList.add(messageDTO);
         }
 
@@ -65,7 +62,7 @@ public class MessageQueryServiceImpl implements MessageQueryService {
 
         List<MessageDTO> messageDTOList = new ArrayList<>();
         for (int i=0;i<messagePOPage.getRecords().size();i++) {
-            MessageDTO messageDTO = messageAssembler.assembleMessageDTO(messagePOPage.getRecords().get(i));
+            MessageDTO messageDTO = MessageAssembler.INSTANCE.assembleMessageDTO(messagePOPage.getRecords().get(i));
             messageDTOList.add(messageDTO);
         }
 
@@ -92,7 +89,7 @@ public class MessageQueryServiceImpl implements MessageQueryService {
 
         List<MessageDTO> messageDTOList = new ArrayList<>();
         for (int i=0;i<messagePOPage.getRecords().size();i++) {
-            MessageDTO messageDTO = messageAssembler.assembleMessageDTO(messagePOPage.getRecords().get(i));
+            MessageDTO messageDTO = MessageAssembler.INSTANCE.assembleMessageDTO(messagePOPage.getRecords().get(i));
             messageDTOList.add(messageDTO);
         }
 

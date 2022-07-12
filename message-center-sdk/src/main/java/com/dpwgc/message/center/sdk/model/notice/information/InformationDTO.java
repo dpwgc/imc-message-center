@@ -1,5 +1,10 @@
 package com.dpwgc.message.center.sdk.model.notice.information;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class InformationDTO {
     /**
      * 通知信息id

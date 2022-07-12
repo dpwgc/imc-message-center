@@ -20,9 +20,6 @@ public class InformationQueryServiceImpl implements InformationQueryService {
     @Resource
     InformationMapper informationMapper;
 
-    @Resource
-    InformationAssembler informationAssembler;
-
     @Override
     public InformationPageDTO findByGroupId(String appId, String groupId, Long startTime, Long endTime, Integer pageNum, Integer pageSize) {
 
@@ -33,13 +30,14 @@ public class InformationQueryServiceImpl implements InformationQueryService {
         queryWrapper.eq("group_id",appId);
         queryWrapper.ge("create_time",startTime);       //>=
         queryWrapper.lt("create_time",endTime);         //<
+        queryWrapper.eq("status",1);
 
         Page<InformationPO> informationPOPage = informationMapper.selectPage(page,queryWrapper);
         Long count = informationMapper.selectCount(queryWrapper);
 
         List<InformationDTO> informationDTOList = new ArrayList<>();
         for (int i=0;i<informationPOPage.getRecords().size();i++) {
-            InformationDTO informationDTO = informationAssembler.assembleInformationDTO(informationPOPage.getRecords().get(i));
+            InformationDTO informationDTO = InformationAssembler.INSTANCE.assembleInformationDTO(informationPOPage.getRecords().get(i));
             informationDTOList.add(informationDTO);
         }
 
@@ -59,13 +57,14 @@ public class InformationQueryServiceImpl implements InformationQueryService {
         queryWrapper.eq("user_id",userId);
         queryWrapper.ge("create_time",startTime);       //>=
         queryWrapper.lt("create_time",endTime);         //<
+        queryWrapper.eq("status",1);
 
         Page<InformationPO> informationPOPage = informationMapper.selectPage(page,queryWrapper);
         Long count = informationMapper.selectCount(queryWrapper);
 
         List<InformationDTO> informationDTOList = new ArrayList<>();
         for (int i=0;i<informationPOPage.getRecords().size();i++) {
-            InformationDTO informationDTO = informationAssembler.assembleInformationDTO(informationPOPage.getRecords().get(i));
+            InformationDTO informationDTO = InformationAssembler.INSTANCE.assembleInformationDTO(informationPOPage.getRecords().get(i));
             informationDTOList.add(informationDTO);
         }
 
@@ -86,13 +85,14 @@ public class InformationQueryServiceImpl implements InformationQueryService {
         queryWrapper.eq("user_id",userId);
         queryWrapper.ge("create_time",startTime);       //>=
         queryWrapper.lt("create_time",endTime);         //<
+        queryWrapper.eq("status",1);
 
         Page<InformationPO> informationPOPage = informationMapper.selectPage(page,queryWrapper);
         Long count = informationMapper.selectCount(queryWrapper);
 
         List<InformationDTO> informationDTOList = new ArrayList<>();
         for (int i=0;i<informationPOPage.getRecords().size();i++) {
-            InformationDTO informationDTO = informationAssembler.assembleInformationDTO(informationPOPage.getRecords().get(i));
+            InformationDTO informationDTO = InformationAssembler.INSTANCE.assembleInformationDTO(informationPOPage.getRecords().get(i));
             informationDTOList.add(informationDTO);
         }
 
