@@ -29,10 +29,10 @@ public class MessageRepositoryImpl implements MessageRepository {
     public Message recall(String messageId,String recallCause) {
 
         //获取消息
-        QueryWrapper<MessagePO> queryOrder = new QueryWrapper<>();
-        queryOrder.eq("message_id",messageId);
-        queryOrder.eq("status",1);
-        MessagePO messagePO = messageMapper.selectOne(queryOrder);
+        QueryWrapper<MessagePO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("message_id",messageId);
+        queryWrapper.eq("status",1);
+        MessagePO messagePO = messageMapper.selectOne(queryWrapper);
 
         //如果查不到此消息
         if(messagePO == null){
@@ -50,7 +50,7 @@ public class MessageRepositoryImpl implements MessageRepository {
         messagePO.setRecallCause(recallCause);
 
         //如果更新成功
-        if (messageMapper.update(messagePO,queryOrder) > 0) {
+        if (messageMapper.update(messagePO,queryWrapper) > 0) {
             return MessagePOAssembler.INSTANCE.assemblerMessage(messagePO);
         }
         return null;
