@@ -32,8 +32,8 @@ public class MessageQueryServiceImpl implements MessageQueryService {
 
         queryOrder.eq("app_id",appId);
         queryOrder.eq("group_id",appId);
-        queryOrder.ge("start_time",startTime);  //>=
-        queryOrder.le("end_time",endTime);      //<=
+        queryOrder.ge("create_time",startTime);  //>=
+        queryOrder.le("create_time",endTime);      //<=
 
         Page<MessagePO> messagePOPage = messageMapper.selectPage(page,queryOrder);
 
@@ -53,8 +53,8 @@ public class MessageQueryServiceImpl implements MessageQueryService {
 
         queryOrder.eq("app_id",appId);
         queryOrder.eq("user_id",userId);
-        queryOrder.ge("start_time",startTime);  //>=
-        queryOrder.le("end_time",endTime);      //<=
+        queryOrder.ge("create_time",startTime);  //>=
+        queryOrder.le("create_time",endTime);      //<=
 
         Page<MessagePO> messagePOPage = messageMapper.selectPage(page,queryOrder);
 
@@ -75,8 +75,8 @@ public class MessageQueryServiceImpl implements MessageQueryService {
         queryOrder.eq("app_id",appId);
         queryOrder.eq("group_id",appId);
         queryOrder.eq("user_id",userId);
-        queryOrder.ge("start_time",startTime);  //>=
-        queryOrder.le("end_time",endTime);      //<=
+        queryOrder.ge("create_time",startTime);  //>=
+        queryOrder.le("create_time",endTime);      //<=
 
         Page<MessagePO> messagePOPage = messageMapper.selectPage(page,queryOrder);
 

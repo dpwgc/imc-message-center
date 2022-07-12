@@ -57,7 +57,7 @@ public class MessageCommandServiceImpl implements MessageCommandService {
         return false;
     }
 
-    public boolean recallMessage(String messageId,String recallCause) {
+    public boolean recall(String messageId,String recallCause) {
         Message message = messageRepository.recall(messageId,recallCause);
 
         if (message != null) {

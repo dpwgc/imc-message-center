@@ -23,9 +23,9 @@ public class MessageController {
     @Resource
     MessageCommandService messageCommandService;
 
-    @PutMapping("/recallMessage")
-    public ResultDTO<String> recallMessage(String messageId,String recallCause) {
-        if (messageCommandService.recallMessage(messageId,recallCause)) {
+    @PutMapping("/recall")
+    public ResultDTO<String> recall(String messageId,String recallCause) {
+        if (messageCommandService.recall(messageId,recallCause)) {
             return ResultDTO.getSuccessResult("1");
         }
         return ResultDTO.getFailureResult("0");
