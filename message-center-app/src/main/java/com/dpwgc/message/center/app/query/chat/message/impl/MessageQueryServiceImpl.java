@@ -32,7 +32,7 @@ public class MessageQueryServiceImpl implements MessageQueryService {
         queryWrapper.eq("app_id",appId);
         queryWrapper.eq("group_id",appId);
         queryWrapper.ge("create_time",startTime);       //>=
-        queryWrapper.le("create_time",endTime);         //<=
+        queryWrapper.lt("create_time",endTime);         //<
 
         Page<MessagePO> messagePOPage = messageMapper.selectPage(page,queryWrapper);
         Long count = messageMapper.selectCount(queryWrapper);
@@ -58,7 +58,7 @@ public class MessageQueryServiceImpl implements MessageQueryService {
         queryWrapper.eq("app_id",appId);
         queryWrapper.eq("user_id",userId);
         queryWrapper.ge("create_time",startTime);       //>=
-        queryWrapper.le("create_time",endTime);         //<=
+        queryWrapper.lt("create_time",endTime);         //<
 
         Page<MessagePO> messagePOPage = messageMapper.selectPage(page,queryWrapper);
         Long count = messageMapper.selectCount(queryWrapper);
@@ -85,7 +85,7 @@ public class MessageQueryServiceImpl implements MessageQueryService {
         queryWrapper.eq("group_id",appId);
         queryWrapper.eq("user_id",userId);
         queryWrapper.ge("create_time",startTime);       //>=
-        queryWrapper.le("create_time",endTime);         //<=
+        queryWrapper.lt("create_time",endTime);         //<
 
         Page<MessagePO> messagePOPage = messageMapper.selectPage(page,queryWrapper);
         Long count = messageMapper.selectCount(queryWrapper);
