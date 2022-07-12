@@ -5,7 +5,6 @@ import com.dpwgc.message.center.app.query.chat.message.MessageQueryService;
 import com.dpwgc.message.center.sdk.base.ResultDTO;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageCommand;
 import com.dpwgc.message.center.sdk.model.chat.message.MessagePageDTO;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
