@@ -3,11 +3,10 @@ package com.dpwgc.message.center.ui.controller.chat;
 import com.dpwgc.message.center.app.command.chat.service.message.MessageCommandService;
 import com.dpwgc.message.center.app.query.chat.message.MessageQueryService;
 import com.dpwgc.message.center.sdk.base.ResultDTO;
+import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageCommand;
 import com.dpwgc.message.center.sdk.model.chat.message.MessagePageDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -21,12 +20,21 @@ public class MessageController {
     @Resource
     MessageCommandService messageCommandService;
 
-    @PutMapping("/recall")
-    public ResultDTO<String> recall(String messageId,String recallCause) {
-        if (messageCommandService.recallMessage(messageId,recallCause)) {
-            return ResultDTO.getSuccessResult("1");
+    @PutMapping("/create")
+    public ResultDTO<String> createMessage(@Validated @RequestBody CreateMessageCommand command) {
+
+        if (messageCommandService.createMessage(command)) {
+            return ResultDTO.getSuccessResult("");
         }
-        return ResultDTO.getFailureResult("0");
+        return ResultDTO.getFailureResult("");
+    }
+
+    @PutMapping("/recall")
+    public ResultDTO<String> recallMessage(String messageId,String recallCause) {
+        if (messageCommandService.recallMessage(messageId,recallCause)) {
+            return ResultDTO.getSuccessResult("");
+        }
+        return ResultDTO.getFailureResult("");
     }
 
     @GetMapping("/findByGroupId")

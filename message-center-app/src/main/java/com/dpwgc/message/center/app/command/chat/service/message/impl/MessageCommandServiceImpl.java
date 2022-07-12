@@ -9,6 +9,7 @@ import com.dpwgc.message.center.domain.chat.message.MessageRepository;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import com.dpwgc.message.center.infrastructure.util.RedisUtil;
 import com.dpwgc.message.center.infrastructure.util.SnowUtil;
+import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageCommand;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageWsCommand;
 import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,32 @@ public class MessageCommandServiceImpl implements MessageCommandService {
 
             //在redis管道中发布消息
             redisUtil.pub("broadcast-".concat(appId),jsonStr);
+
+            LogUtil.info("save user message: ".concat(jsonStr));
+
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean createMessage(CreateMessageCommand command) {
+
+        //创建Message对象
+        MessageFactory messageFactory = new MessageFactory();
+        Message message = messageFactory.create(snowUtil.nextIdString(),command.getAppId(),command.getGroupId(),command.getUserId(),command.getContent(),command.getType());
+
+        //成功插入数据层
+        if (messageRepository.save(message)) {
+
+            //构建MessageDTO对象
+            MessageDTO messageDTO = messageAssembler.assembleMessageDTO(message);
+
+            //将MessageDTO对象转为json字符串
+            String jsonStr = JSON.parse(messageDTO.toString()).toString();
+
+            //在redis管道中发布消息
+            redisUtil.pub("broadcast-".concat(command.getAppId()),jsonStr);
 
             LogUtil.info("save user message: ".concat(jsonStr));
 
