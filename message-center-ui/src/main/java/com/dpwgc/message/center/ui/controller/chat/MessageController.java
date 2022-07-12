@@ -23,7 +23,7 @@ public class MessageController {
 
     @PutMapping("/recall")
     public ResultDTO<String> recall(String messageId,String recallCause) {
-        if (messageCommandService.recall(messageId,recallCause)) {
+        if (messageCommandService.recallMessage(messageId,recallCause)) {
             return ResultDTO.getSuccessResult("1");
         }
         return ResultDTO.getFailureResult("0");

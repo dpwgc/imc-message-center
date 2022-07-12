@@ -6,5 +6,5 @@ public interface MessageCommandService {
 
     boolean createMessage(CreateMessageWsCommand command,String appId,String groupId,String userId);
 
-    boolean recall(String messageId,String recallCause);
+    boolean recallMessage(String messageId,String recallCause);
 }

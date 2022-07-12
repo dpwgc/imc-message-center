@@ -11,7 +11,6 @@ import com.dpwgc.message.center.infrastructure.util.RedisUtil;
 import com.dpwgc.message.center.infrastructure.util.SnowUtil;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageWsCommand;
 import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -57,7 +56,7 @@ public class MessageCommandServiceImpl implements MessageCommandService {
         return false;
     }
 
-    public boolean recall(String messageId,String recallCause) {
+    public boolean recallMessage(String messageId,String recallCause) {
         Message message = messageRepository.recall(messageId,recallCause);
 
         if (message != null) {
