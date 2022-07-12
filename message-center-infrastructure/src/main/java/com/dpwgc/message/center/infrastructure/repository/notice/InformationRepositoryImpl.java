@@ -4,8 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dpwgc.message.center.domain.notice.information.Information;
 import com.dpwgc.message.center.domain.notice.information.InformationRepository;
 import com.dpwgc.message.center.infrastructure.assembler.InformationPOAssembler;
-import com.dpwgc.message.center.infrastructure.assembler.MessagePOAssembler;
-import com.dpwgc.message.center.infrastructure.dal.chat.entity.MessagePO;
 import com.dpwgc.message.center.infrastructure.dal.notice.entity.InformationPO;
 import com.dpwgc.message.center.infrastructure.dal.notice.mapper.InformationMapper;
 import org.springframework.stereotype.Service;
