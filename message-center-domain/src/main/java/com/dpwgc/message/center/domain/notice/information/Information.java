@@ -47,7 +47,7 @@ public class Information {
     /**
      * 通知信息点击后的跳转链接
      */
-    private String jumpURL;
+    private String jumpUrl;
 
     /**
      * 通知信息当前状态（1-正常，0-已删除）
@@ -59,7 +59,7 @@ public class Information {
      */
     private int type;
 
-    protected Information create(String informationId, String appId, String groupId, String userId, String title, String content, String jumpURL, int type) {
+    protected Information create(String informationId, String appId, String groupId, String userId, String title, String content, String jumpUrl, int type) {
 
         this.createTime = System.currentTimeMillis();
         this.status = 1;
@@ -70,7 +70,7 @@ public class Information {
         this.userId = userId;
         this.title = title;
         this.content = content;
-        this.jumpURL = jumpURL;
+        this.jumpUrl = jumpUrl;
         this.type = type;
 
         return this;

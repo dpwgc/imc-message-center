@@ -55,7 +55,7 @@ public class InformationPO {
     /**
      * 通知信息点击后的跳转链接
      */
-    private String jumpURL;
+    private String jumpUrl;
 
     /**
      * 通知信息当前状态（1-正常，0-已删除）

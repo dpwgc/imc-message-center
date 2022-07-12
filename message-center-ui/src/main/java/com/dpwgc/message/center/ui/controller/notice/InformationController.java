@@ -2,7 +2,7 @@ package com.dpwgc.message.center.ui.controller.notice;
 
 import com.dpwgc.message.center.app.command.notice.service.information.InformationCommandService;
 import com.dpwgc.message.center.sdk.base.ResultDTO;
-import com.dpwgc.message.center.sdk.model.notice.information.InformationCommand;
+import com.dpwgc.message.center.sdk.model.notice.information.CreateInformationCommand;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -15,8 +15,8 @@ public class InformationController {
     InformationCommandService informationCommandService;
 
     @PostMapping("/create")
-    public ResultDTO<String> createInformation(@RequestBody InformationCommand informationCommand) {
-        if (informationCommandService.createInformation(informationCommand)) {
+    public ResultDTO<String> createInformation(@RequestBody CreateInformationCommand createInformationCommand) {
+        if (informationCommandService.createInformation(createInformationCommand)) {
             return ResultDTO.getSuccessResult("");
         }
         return ResultDTO.getFailureResult("");
