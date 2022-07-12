@@ -112,6 +112,10 @@ public class MessageQueryServiceImpl implements MessageQueryService {
         //找到该messageId对应的消息信息
         MessagePO messagePO = findOneMessage(messageId);
 
+        if (messagePO == null) {
+            return null;
+        }
+
         //查找在该消息之前的消息列表（pageSize限制返回的消息数量）
         Page<MessagePO> page = new Page<>(0, pageSize);
         QueryWrapper<MessagePO> queryWrapper = new QueryWrapper<>();
@@ -142,6 +146,10 @@ public class MessageQueryServiceImpl implements MessageQueryService {
 
         //找到该messageId对应的消息信息
         MessagePO messagePO = findOneMessage(messageId);
+
+        if (messagePO == null) {
+            return null;
+        }
 
         //查找在该消息之后的消息列表（pageSize限制返回的消息数量）
         Page<MessagePO> page = new Page<>(0, pageSize);
