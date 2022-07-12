@@ -6,9 +6,9 @@ import com.dpwgc.message.center.app.command.chat.service.message.MessageCommandS
 import com.dpwgc.message.center.domain.chat.message.Message;
 import com.dpwgc.message.center.domain.chat.message.MessageFactory;
 import com.dpwgc.message.center.domain.chat.message.MessageRepository;
+import com.dpwgc.message.center.infrastructure.util.IdGenUtil;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import com.dpwgc.message.center.infrastructure.util.RedisUtil;
-import com.dpwgc.message.center.infrastructure.util.SnowUtil;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageCommand;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageWsCommand;
 import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
@@ -20,7 +20,7 @@ import javax.annotation.Resource;
 public class MessageCommandServiceImpl implements MessageCommandService {
 
     @Resource
-    SnowUtil snowUtil;
+    IdGenUtil idGenUtil;
 
     @Resource
     RedisUtil redisUtil;
@@ -36,7 +36,7 @@ public class MessageCommandServiceImpl implements MessageCommandService {
 
         //创建Message对象
         MessageFactory messageFactory = new MessageFactory();
-        Message message = messageFactory.create(snowUtil.nextIdString(),appId,groupId,userId,command.getContent(),command.getType());
+        Message message = messageFactory.create(idGenUtil.nextIdString(),appId,groupId,userId,command.getContent(),command.getType());
 
         //成功插入数据层
         if (messageRepository.save(message)) {
@@ -62,7 +62,7 @@ public class MessageCommandServiceImpl implements MessageCommandService {
 
         //创建Message对象
         MessageFactory messageFactory = new MessageFactory();
-        Message message = messageFactory.create(snowUtil.nextIdString(),command.getAppId(),command.getGroupId(),command.getUserId(),command.getContent(),command.getType());
+        Message message = messageFactory.create(idGenUtil.nextIdString(),command.getAppId(),command.getGroupId(),command.getUserId(),command.getContent(),command.getType());
 
         //成功插入数据层
         if (messageRepository.save(message)) {

@@ -12,17 +12,17 @@ import javax.annotation.PostConstruct;
  * 雪花算法
  */
 @Component
-public class SnowUtil implements ApplicationContextAware {
+public class IdGenUtil implements ApplicationContextAware {
 
     private static ApplicationContext _applicationContext;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        SnowUtil._applicationContext = applicationContext;
+        IdGenUtil._applicationContext = applicationContext;
     }
 
-    public static SnowUtil getBean() {
-        return _applicationContext.getBean(SnowUtil.class);
+    public static IdGenUtil getBean() {
+        return _applicationContext.getBean(IdGenUtil.class);
     }
 
     /**
