@@ -9,8 +9,8 @@ import com.dpwgc.message.center.domain.chat.message.MessageRepository;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import com.dpwgc.message.center.infrastructure.util.RedisUtil;
 import com.dpwgc.message.center.infrastructure.util.SnowUtil;
-import com.dpwgc.message.center.sdk.command.chat.message.CreateMessageWsCommand;
-import com.dpwgc.message.center.sdk.command.chat.message.MessageDTO;
+import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageWsCommand;
+import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

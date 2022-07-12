@@ -1,6 +1,9 @@
-package com.dpwgc.message.center.sdk.command.notice.information;
+package com.dpwgc.message.center.sdk.model.notice.information;
 
-public class InformationDTO {
+import lombok.Data;
+
+@Data
+public class InformationCommand {
     /**
      * 通知信息id
      */
@@ -34,25 +37,27 @@ public class InformationDTO {
     /**
      * 通知信息创建时间戳（毫秒级）
      */
-    private Long createTime;
+    private long createTime;
 
     /**
      * 通知信息删除时间戳（毫秒级）
      */
-    private Long deleteTime;
+    private long deleteTime;
 
     /**
      * 通知信息点击后的跳转链接
      */
-    private String jumpURL;
+    private String jumpUrl;
 
     /**
      * 通知信息当前状态（1-正常，0-已删除）
      */
-    private Integer status;
+    private int status;
 
     /**
      * 通知信息类型（自定义，例如：1-置顶，2-精华，3-普通）
      */
-    private Integer type;
+    private int type;
+
+
 }

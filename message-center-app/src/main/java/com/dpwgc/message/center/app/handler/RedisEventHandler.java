@@ -3,7 +3,7 @@ package com.dpwgc.message.center.app.handler;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
-import com.dpwgc.message.center.sdk.command.chat.message.MessageDTO;
+import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.data.redis.connection.Message;

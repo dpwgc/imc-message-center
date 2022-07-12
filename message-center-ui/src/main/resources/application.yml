@@ -34,6 +34,12 @@ snowflake:
   # 机器id
   workerId: 0
 
+# 群聊配置
+chat:
+  message:
+    # 消息撤回时限（单位毫秒，默认允许两分钟内撤回消息）
+    recallTimeLimit: 120000
+
 # MyBatis-Plus配置
 mybatis-plus:
   configuration:

@@ -5,7 +5,7 @@ import com.dpwgc.message.center.app.command.chat.service.message.MessageCommandS
 import com.dpwgc.message.center.app.handler.RedisEventHandler;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import com.dpwgc.message.center.sdk.base.ResultDTO;
-import com.dpwgc.message.center.sdk.command.chat.message.CreateMessageWsCommand;
+import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageWsCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;

@@ -6,7 +6,8 @@ import com.dpwgc.message.center.app.command.chat.assembler.MessageAssembler;
 import com.dpwgc.message.center.app.query.chat.message.MessageQueryService;
 import com.dpwgc.message.center.infrastructure.dal.chat.entity.MessagePO;
 import com.dpwgc.message.center.infrastructure.dal.chat.mapper.MessageMapper;
-import com.dpwgc.message.center.sdk.command.chat.message.MessageDTO;
+import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
+import com.dpwgc.message.center.sdk.model.chat.message.MessagePageDTO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,17 +24,18 @@ public class MessageQueryServiceImpl implements MessageQueryService {
     MessageAssembler messageAssembler;
 
     @Override
-    public List<MessageDTO> findByGroupId(String appId, String groupId, Long startTime, Long endTime, Integer pageNum, Integer pageSize) {
+    public MessagePageDTO findByGroupId(String appId, String groupId, Long startTime, Long endTime, Integer pageNum, Integer pageSize) {
 
         Page<MessagePO> page = new Page<>(pageNum, pageSize);
-        QueryWrapper<MessagePO> queryOrder = new QueryWrapper<>();
+        QueryWrapper<MessagePO> queryWrapper = new QueryWrapper<>();
 
-        queryOrder.eq("app_id",appId);
-        queryOrder.eq("group_id",appId);
-        queryOrder.ge("create_time",startTime);  //>=
-        queryOrder.le("create_time",endTime);      //<=
+        queryWrapper.eq("app_id",appId);
+        queryWrapper.eq("group_id",appId);
+        queryWrapper.ge("create_time",startTime);       //>=
+        queryWrapper.le("create_time",endTime);         //<=
 
-        Page<MessagePO> messagePOPage = messageMapper.selectPage(page,queryOrder);
+        Page<MessagePO> messagePOPage = messageMapper.selectPage(page,queryWrapper);
+        Long count = messageMapper.selectCount(queryWrapper);
 
         List<MessageDTO> messageDTOList = new ArrayList<>();
         for (int i=0;i<messagePOPage.getRecords().size();i++) {
@@ -41,20 +43,25 @@ public class MessageQueryServiceImpl implements MessageQueryService {
             messageDTOList.add(messageDTO);
         }
 
-        return messageDTOList;
+        MessagePageDTO messagePageDTO = new MessagePageDTO();
+        messagePageDTO.setTotal(count);
+        messagePageDTO.setPageMessageList(messageDTOList);
+
+        return messagePageDTO;
     }
     @Override
-    public List<MessageDTO> findByUserId(String appId, String userId, Long startTime, Long endTime, Integer pageNum, Integer pageSize) {
+    public MessagePageDTO findByUserId(String appId, String userId, Long startTime, Long endTime, Integer pageNum, Integer pageSize) {
 
         Page<MessagePO> page = new Page<>(pageNum, pageSize);
-        QueryWrapper<MessagePO> queryOrder = new QueryWrapper<>();
+        QueryWrapper<MessagePO> queryWrapper = new QueryWrapper<>();
 
-        queryOrder.eq("app_id",appId);
-        queryOrder.eq("user_id",userId);
-        queryOrder.ge("create_time",startTime);  //>=
-        queryOrder.le("create_time",endTime);      //<=
+        queryWrapper.eq("app_id",appId);
+        queryWrapper.eq("user_id",userId);
+        queryWrapper.ge("create_time",startTime);       //>=
+        queryWrapper.le("create_time",endTime);         //<=
 
-        Page<MessagePO> messagePOPage = messageMapper.selectPage(page,queryOrder);
+        Page<MessagePO> messagePOPage = messageMapper.selectPage(page,queryWrapper);
+        Long count = messageMapper.selectCount(queryWrapper);
 
         List<MessageDTO> messageDTOList = new ArrayList<>();
         for (int i=0;i<messagePOPage.getRecords().size();i++) {
@@ -62,21 +69,26 @@ public class MessageQueryServiceImpl implements MessageQueryService {
             messageDTOList.add(messageDTO);
         }
 
-        return messageDTOList;
+        MessagePageDTO messagePageDTO = new MessagePageDTO();
+        messagePageDTO.setTotal(count);
+        messagePageDTO.setPageMessageList(messageDTOList);
+
+        return messagePageDTO;
     }
     @Override
-    public List<MessageDTO> findByGroupIdAndUserId(String appId, String groupId, String userId, Long startTime, Long endTime, Integer pageNum, Integer pageSize) {
+    public MessagePageDTO findByGroupIdAndUserId(String appId, String groupId, String userId, Long startTime, Long endTime, Integer pageNum, Integer pageSize) {
 
         Page<MessagePO> page = new Page<>(pageNum, pageSize);
-        QueryWrapper<MessagePO> queryOrder = new QueryWrapper<>();
+        QueryWrapper<MessagePO> queryWrapper = new QueryWrapper<>();
 
-        queryOrder.eq("app_id",appId);
-        queryOrder.eq("group_id",appId);
-        queryOrder.eq("user_id",userId);
-        queryOrder.ge("create_time",startTime);  //>=
-        queryOrder.le("create_time",endTime);      //<=
+        queryWrapper.eq("app_id",appId);
+        queryWrapper.eq("group_id",appId);
+        queryWrapper.eq("user_id",userId);
+        queryWrapper.ge("create_time",startTime);       //>=
+        queryWrapper.le("create_time",endTime);         //<=
 
-        Page<MessagePO> messagePOPage = messageMapper.selectPage(page,queryOrder);
+        Page<MessagePO> messagePOPage = messageMapper.selectPage(page,queryWrapper);
+        Long count = messageMapper.selectCount(queryWrapper);
 
         List<MessageDTO> messageDTOList = new ArrayList<>();
         for (int i=0;i<messagePOPage.getRecords().size();i++) {
@@ -84,6 +96,10 @@ public class MessageQueryServiceImpl implements MessageQueryService {
             messageDTOList.add(messageDTO);
         }
 
-        return messageDTOList;
+        MessagePageDTO messagePageDTO = new MessagePageDTO();
+        messagePageDTO.setTotal(count);
+        messagePageDTO.setPageMessageList(messageDTOList);
+
+        return messagePageDTO;
     }
 }

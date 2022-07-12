@@ -1,4 +1,4 @@
-package com.dpwgc.message.center.sdk.command.chat.message;
+package com.dpwgc.message.center.sdk.model.chat.message;
 
 import lombok.Getter;
 import lombok.Setter;

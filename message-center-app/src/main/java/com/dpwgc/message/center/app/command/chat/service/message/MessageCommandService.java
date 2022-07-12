@@ -1,6 +1,6 @@
 package com.dpwgc.message.center.app.command.chat.service.message;
 
-import com.dpwgc.message.center.sdk.command.chat.message.CreateMessageWsCommand;
+import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageWsCommand;
 
 public interface MessageCommandService {
 
