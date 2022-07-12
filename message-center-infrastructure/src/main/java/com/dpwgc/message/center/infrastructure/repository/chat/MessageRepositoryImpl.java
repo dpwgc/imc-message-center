@@ -6,6 +6,7 @@ import com.dpwgc.message.center.domain.chat.message.MessageRepository;
 import com.dpwgc.message.center.infrastructure.assembler.MessagePOAssembler;
 import com.dpwgc.message.center.infrastructure.dal.chat.entity.MessagePO;
 import com.dpwgc.message.center.infrastructure.dal.chat.mapper.MessageMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,6 +16,9 @@ public class MessageRepositoryImpl implements MessageRepository {
 
     @Resource
     MessageMapper messageMapper;
+
+    @Value("${chat.message.recallTimeLimit}")
+    private Long recallTimeLimit;
 
     @Override
     public boolean save(Message message) {
@@ -32,6 +36,11 @@ public class MessageRepositoryImpl implements MessageRepository {
 
         //如果查不到此消息
         if(messagePO == null){
+            return null;
+        }
+
+        //判断是否超过撤回时限
+        if (System.currentTimeMillis() > messagePO.getCreateTime() + recallTimeLimit) {
             return null;
         }
 

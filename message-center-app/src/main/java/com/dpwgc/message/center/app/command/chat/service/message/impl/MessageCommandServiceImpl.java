@@ -31,10 +31,6 @@ public class MessageCommandServiceImpl implements MessageCommandService {
     @Resource
     MessageAssembler messageAssembler;
 
-    @Value("${chat.message.recallTimeLimit}")
-    private Long recallTimeLimit;
-
-
     @Override
     public boolean createMessage(CreateMessageWsCommand command,String appId,String groupId,String userId) {
 
@@ -65,11 +61,6 @@ public class MessageCommandServiceImpl implements MessageCommandService {
         Message message = messageRepository.recall(messageId,recallCause);
 
         if (message != null) {
-
-            //判断是否超过撤回时限
-            if (System.currentTimeMillis() > message.getCreateTime() + recallTimeLimit) {
-                return false;
-            }
 
             //构建MessageDTO对象
             MessageDTO messageDTO = messageAssembler.assembleMessageDTO(message);
