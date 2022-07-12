@@ -31,6 +31,8 @@ public class MessageQueryServiceImpl implements MessageQueryService {
         queryWrapper.ge("create_time",startTime);       //>=
         queryWrapper.lt("create_time",endTime);         //<
 
+        queryWrapper.orderByAsc("create_time");    //按时间正序查找聊天消息
+
         Page<MessagePO> messagePOPage = messageMapper.selectPage(page,queryWrapper);
         Long count = messageMapper.selectCount(queryWrapper);
 
@@ -56,6 +58,8 @@ public class MessageQueryServiceImpl implements MessageQueryService {
         queryWrapper.eq("user_id",userId);
         queryWrapper.ge("create_time",startTime);       //>=
         queryWrapper.lt("create_time",endTime);         //<
+
+        queryWrapper.orderByAsc("create_time");    //按时间正序查找聊天消息
 
         Page<MessagePO> messagePOPage = messageMapper.selectPage(page,queryWrapper);
         Long count = messageMapper.selectCount(queryWrapper);
@@ -83,6 +87,8 @@ public class MessageQueryServiceImpl implements MessageQueryService {
         queryWrapper.eq("user_id",userId);
         queryWrapper.ge("create_time",startTime);       //>=
         queryWrapper.lt("create_time",endTime);         //<
+
+        queryWrapper.orderByAsc("create_time");    //按时间正序查找聊天消息
 
         Page<MessagePO> messagePOPage = messageMapper.selectPage(page,queryWrapper);
         Long count = messageMapper.selectCount(queryWrapper);

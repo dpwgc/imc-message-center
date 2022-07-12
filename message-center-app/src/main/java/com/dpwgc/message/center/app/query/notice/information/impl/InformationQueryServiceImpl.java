@@ -32,6 +32,8 @@ public class InformationQueryServiceImpl implements InformationQueryService {
         queryWrapper.lt("create_time",endTime);         //<
         queryWrapper.eq("status",1);
 
+        queryWrapper.orderByDesc("create_time");    //按时间倒序查找通知信息
+
         Page<InformationPO> informationPOPage = informationMapper.selectPage(page,queryWrapper);
         Long count = informationMapper.selectCount(queryWrapper);
 
@@ -58,6 +60,8 @@ public class InformationQueryServiceImpl implements InformationQueryService {
         queryWrapper.ge("create_time",startTime);       //>=
         queryWrapper.lt("create_time",endTime);         //<
         queryWrapper.eq("status",1);
+
+        queryWrapper.orderByDesc("create_time");    //按时间倒序查找通知信息
 
         Page<InformationPO> informationPOPage = informationMapper.selectPage(page,queryWrapper);
         Long count = informationMapper.selectCount(queryWrapper);
@@ -86,6 +90,8 @@ public class InformationQueryServiceImpl implements InformationQueryService {
         queryWrapper.ge("create_time",startTime);       //>=
         queryWrapper.lt("create_time",endTime);         //<
         queryWrapper.eq("status",1);
+
+        queryWrapper.orderByDesc("create_time");    //按时间倒序查找通知信息
 
         Page<InformationPO> informationPOPage = informationMapper.selectPage(page,queryWrapper);
         Long count = informationMapper.selectCount(queryWrapper);
