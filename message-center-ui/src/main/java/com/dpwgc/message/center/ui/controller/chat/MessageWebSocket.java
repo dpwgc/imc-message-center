@@ -78,27 +78,14 @@ public class MessageWebSocket {
     @OnOpen
     public void onOpen(Session session, @PathParam(value = "appId") String appId, @PathParam(value = "gatewayId") String gatewayId) {
 
-        //会话池的sessionKey由appId+gatewayId组成
+        //会话池的sessionKey由appId+gatewayId组成（每个网关都与消息中台维持一个session）
         String sessionKey = appId.concat("-").concat(gatewayId);
 
         sessionPools.put(sessionKey, session);//往websocket连接池里添加连接
 
-        /*
-         * === 设置监听器，监听在线消息 ===
-         */
-        //将session与userId传入Redis订阅监听器
-        redisEventHandler.setSession(sessionKey,session);
-
-        //设置Redis订阅/发布管道的key（broadcast-{appId}）
-        //设置Redis订阅/发布监听器，监听推送该群组的消息
-        String redisMQKey = "broadcast-".concat(appId);
-
-        if (redisListenMap.get(redisMQKey) == null) {
-            //如果当前这个主题没有被订阅，则建立监听器。
-            redisMessageListenerContainer.addMessageListener(redisEventHandler,new PatternTopic(redisMQKey));
-            //redisListenMap：记录已订阅的监听管道，避免重复订阅
-            redisListenMap.put(redisMQKey,true);
-            LogUtil.info("subscribed to redis channel: ".concat(redisMQKey));
+        if (!createListener(sessionKey,appId,session)) {
+            //回应网关-连接失败
+            sendInfo(sessionKey,ResultDTO.getSuccessResult("connection failed").setCode(4000).toString());
         }
 
         //回应网关-连接成功
@@ -117,11 +104,12 @@ public class MessageWebSocket {
         //JSON对象转换成Java对象
         CreateMessageWsCommand command = JSONObject.toJavaObject(jsonObject, CreateMessageWsCommand.class);
 
+        //会话池的sessionKey由appId+gatewayId组成
+        String sessionKey = appId.concat("-").concat(gatewayId);
+
         /**
          * 将消息插入mysql或消息队列 TODO
          */
-        String sessionKey = appId.concat("-").concat(gatewayId);
-        //在数据层插入消息
         if (!messageCommandService.createMessage(command)) {
             //回应网关-消息发送失败
             sendInfo(sessionKey,ResultDTO.getFailureResult(msg).setCode(4001).toString());
@@ -137,5 +125,32 @@ public class MessageWebSocket {
         sendMessage(session,ResultDTO.getFailureResult(err).toString());
         //关闭对话
         session.close();
+    }
+
+    private boolean createListener(String sessionKey,String appId,Session session) {
+
+        try {
+            /*
+             * === 设置监听器，监听在线消息 ===
+             */
+            //将session传入Redis事件处理器（用于接收广播消息）
+            redisEventHandler.setSession(sessionKey,session);
+
+            //设置Redis订阅/发布管道的key（broadcast-{appId}）
+            //设置Redis订阅/发布监听器，监听推送到该应用的所有消息
+            String redisChannelKey = "broadcast-".concat(appId);
+
+            if (redisListenMap.get(redisChannelKey) == null) {
+                //如果当前这个主题没有被订阅，则建立订阅监听器。
+                redisMessageListenerContainer.addMessageListener(redisEventHandler,new PatternTopic(redisChannelKey));
+                //redisListenMap：记录已订阅的监听管道，避免重复订阅
+                redisListenMap.put(redisChannelKey,true);
+                LogUtil.info("subscribed to redis channel: ".concat(redisChannelKey));
+            }
+            return true;
+        } catch (Exception e) {
+            LogUtil.error(e.toString());
+            return false;
+        }
     }
 }

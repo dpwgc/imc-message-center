@@ -1,14 +1,12 @@
 package com.dpwgc.message.center.app.command.chat.service.message.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.dpwgc.message.center.app.assembler.MessageAssembler;
 import com.dpwgc.message.center.app.command.chat.service.message.MessageCommandService;
 import com.dpwgc.message.center.domain.chat.message.Message;
 import com.dpwgc.message.center.domain.chat.message.MessageFactory;
 import com.dpwgc.message.center.domain.chat.message.MessageRepository;
+import com.dpwgc.message.center.infrastructure.util.BroadcastUtil;
 import com.dpwgc.message.center.infrastructure.util.IdGenUtil;
-import com.dpwgc.message.center.infrastructure.util.LogUtil;
-import com.dpwgc.message.center.infrastructure.util.RedisUtil;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageCommand;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageWsCommand;
 import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
@@ -23,7 +21,7 @@ public class MessageCommandServiceImpl implements MessageCommandService {
     IdGenUtil idGenUtil;
 
     @Resource
-    RedisUtil redisUtil;
+    BroadcastUtil broadcastUtil;
 
     @Resource
     MessageRepository messageRepository;
@@ -44,15 +42,8 @@ public class MessageCommandServiceImpl implements MessageCommandService {
             //构建MessageDTO对象
             MessageDTO messageDTO = messageAssembler.assembleMessageDTO(message);
 
-            //将MessageDTO对象转为json字符串
-            String jsonStr = JSON.parse(messageDTO.toString()).toString();
-
-            //在redis管道中发布消息
-            redisUtil.pub("broadcast-".concat(command.getAppId()),jsonStr);
-
-            LogUtil.info("save user message: ".concat(jsonStr));
-
-            return true;
+            //广播消息
+            return broadcastUtil.broadcast(messageDTO);
         }
         return false;
     }
@@ -70,15 +61,8 @@ public class MessageCommandServiceImpl implements MessageCommandService {
             //构建MessageDTO对象
             MessageDTO messageDTO = messageAssembler.assembleMessageDTO(message);
 
-            //将MessageDTO对象转为json字符串
-            String jsonStr = JSON.parse(messageDTO.toString()).toString();
-
-            //在redis管道中发布消息
-            redisUtil.pub("broadcast-".concat(command.getAppId()),jsonStr);
-
-            LogUtil.info("save user message: ".concat(jsonStr));
-
-            return true;
+            //广播消息
+            return broadcastUtil.broadcast(messageDTO);
         }
         return false;
     }
@@ -91,14 +75,8 @@ public class MessageCommandServiceImpl implements MessageCommandService {
             //构建MessageDTO对象
             MessageDTO messageDTO = messageAssembler.assembleMessageDTO(message);
 
-            //将MessageDTO对象转为json字符串
-            String jsonStr = JSON.parse(messageDTO.toString()).toString();
-
-            //在redis管道中广播撤回信息，告知群组中的所有在线成员该消息已被撤回
-            redisUtil.pub("broadcast-".concat(messageDTO.getAppId()),jsonStr);
-
-            LogUtil.info("recall message: ".concat(jsonStr).concat("/ cause: ").concat(recallCause));
-            return true;
+            //广播消息
+            return broadcastUtil.broadcast(messageDTO);
         }
 
         return false;
