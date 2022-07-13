@@ -9,7 +9,6 @@ import com.dpwgc.message.center.infrastructure.util.BroadcastUtil;
 import com.dpwgc.message.center.infrastructure.util.IdGenUtil;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageCommand;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageWsCommand;
-import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -64,11 +63,8 @@ public class MessageCommandServiceImpl implements MessageCommandService {
 
         if (message != null) {
             if (message.getStatus() == 0) {
-                //去除消息主体内容
-                MessageDTO messageDTO = messageAssembler.assembleMessageDTO(message);
-                messageDTO.setContent("");
                 //广播消息
-                return broadcastUtil.broadcast(messageDTO);
+                return broadcastUtil.broadcast(messageAssembler.assembleMessageDTO(message));
             }
         }
 

@@ -51,6 +51,8 @@ public class MessageRepositoryImpl implements MessageRepository {
 
         //如果更新成功
         if (messageMapper.update(messagePO,queryWrapper) > 0) {
+            //去掉消息主体内容，再返回
+            messagePO.setContent("");
             return MessagePOAssembler.INSTANCE.assemblerMessage(messagePO);
         }
         return null;
