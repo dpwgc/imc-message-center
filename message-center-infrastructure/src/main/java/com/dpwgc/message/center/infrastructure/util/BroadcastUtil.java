@@ -2,9 +2,11 @@ package com.dpwgc.message.center.infrastructure.util;
 
 import com.alibaba.fastjson.JSON;
 import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
+@Component
 public class BroadcastUtil {
 
     @Resource

@@ -1,5 +1,5 @@
 # IMC Message Center 
-## 即时通讯中台-消息推送中心
+## 通讯中台-消息推送中心
 ### `消息中台系统`
 
 本项目是对 https://github.com/dpwgc/fast-im 项目的重构
