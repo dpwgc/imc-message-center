@@ -1,5 +1,7 @@
 # WebSocket连接文档
 
+#### WebSocket测试页面：启动项目后访问 http://127.0.0.1:8000/test.html
+
 ## 网关与imc-message-center的WebSocket连接URL
 > ws://127.0.0.1:8000/chat/message/broadcast/{appId}/{gatewayId}
 
