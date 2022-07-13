@@ -62,9 +62,10 @@ public class RedisEventHandler implements MessageListener {
                         if (messageDTO.getStatus() == 0) {
                             //推送消息给该应用的所有网关（消息code设为2002，告知客户端这是要撤回的消息）
                             session.getBasicRemote().sendText(ResultDTO.getSuccessResult(messageDTO).setCode(2002).toString());
+                        } else {
+                            //推送消息给该应用的所有网关（消息code设为2001，表示该消息是正常聊天消息）
+                            session.getBasicRemote().sendText(ResultDTO.getSuccessResult(messageDTO).setCode(2001).toString());
                         }
-                        //推送消息给该应用的所有网关（消息code设为2001，表示该消息是正常聊天消息）
-                        session.getBasicRemote().sendText(ResultDTO.getSuccessResult(messageDTO).setCode(2001).toString());
                     }
                 }
             } catch (IOException e) {
