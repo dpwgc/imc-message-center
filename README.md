@@ -5,8 +5,8 @@
 本项目是对 https://github.com/dpwgc/fast-im 项目的重构
 （由 MVC 架构转为 DDD + CQRS 架构）
 
-## [HTTP接口文档：API.md](./API.md)
-## [WebSocket连接文档：WS.md](./WS.md)
+### [HTTP接口文档：API.md](./API.md)
+### [WebSocket连接文档：WS.md](./WS.md)
 ***
 
 ### 项目架构
