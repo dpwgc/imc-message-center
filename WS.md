@@ -27,11 +27,11 @@
 * JSON格式，使用WebSocket发送（也可用HTTP发送消息）
 ```json
 {
-	"appId": "test_app",
-	"groupId": "test_group",
-	"userId": "test_user",
-	"content": "ws_test",
-	"type": 1
+  "appId": "test_app",
+  "groupId": "test_group",
+  "userId": "test_user",
+  "content": "ws_test",
+  "type": 1
 }
 ```
 
