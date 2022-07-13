@@ -98,20 +98,26 @@ public class MessageWebSocket {
      * 收到客户端信息
      */
     @OnMessage
-    public void onMessage(String msg, @PathParam(value = "appId") String appId, @PathParam(value = "gatewayId") String gatewayId) throws JsonProcessingException {
-
-        //JSON对象转换成Java对象
-        CreateMessageWsCommand command = JsonUtil.fromJson(msg,CreateMessageWsCommand.class);
+    public void onMessage(String msg, @PathParam(value = "appId") String appId, @PathParam(value = "gatewayId") String gatewayId) {
 
         //会话池的sessionKey由appId+gatewayId组成
         String sessionKey = appId.concat("-").concat(gatewayId);
 
-        /**
-         * 将消息插入mysql或消息队列 TODO
-         */
-        if (!messageCommandService.createMessage(command)) {
+        try {
+            //JSON对象转换成Java对象
+            CreateMessageWsCommand command = JsonUtil.fromJson(msg,CreateMessageWsCommand.class);
+
+            /**
+             * 将消息插入mysql或消息队列 TODO
+             */
+            if (!messageCommandService.createMessage(command)) {
+                //回应网关-消息发送失败
+                sendInfo(sessionKey,ResultDTO.getFailureResult("fail in send").setCode(4001).toString());
+            }
+        } catch (Exception e) {
             //回应网关-消息发送失败
-            sendInfo(sessionKey,ResultDTO.getFailureResult(msg).setCode(4001).toString());
+            sendInfo(sessionKey,ResultDTO.getFailureResult("fail in send").setCode(4001).toString());
+            LogUtil.error(e.toString());
         }
     }
 
