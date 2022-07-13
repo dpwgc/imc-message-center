@@ -7,7 +7,6 @@ import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageCommand;
 import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
 import com.dpwgc.message.center.sdk.model.chat.message.MessagePageDTO;
 import com.dpwgc.message.center.sdk.model.chat.message.RecallMessageCommand;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

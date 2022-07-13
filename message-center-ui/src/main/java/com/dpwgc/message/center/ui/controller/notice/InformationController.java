@@ -6,7 +6,6 @@ import com.dpwgc.message.center.sdk.base.ResultDTO;
 import com.dpwgc.message.center.sdk.model.notice.information.CreateInformationCommand;
 import com.dpwgc.message.center.sdk.model.notice.information.DeleteInformationCommand;
 import com.dpwgc.message.center.sdk.model.notice.information.InformationPageDTO;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
