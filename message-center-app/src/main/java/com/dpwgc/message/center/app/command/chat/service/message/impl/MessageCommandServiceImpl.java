@@ -32,11 +32,11 @@ public class MessageCommandServiceImpl implements MessageCommandService {
     MessageAssembler messageAssembler;
 
     @Override
-    public boolean createMessage(CreateMessageWsCommand command,String appId,String groupId,String userId) {
+    public boolean createMessage(CreateMessageWsCommand command) {
 
         //创建Message对象
         MessageFactory messageFactory = new MessageFactory();
-        Message message = messageFactory.create(idGenUtil.nextIdString(),appId,groupId,userId,command.getContent(),command.getType());
+        Message message = messageFactory.create(idGenUtil.nextIdString(),command.getAppId(),command.getGroupId(),command.getUserId(),command.getContent(),command.getType());
 
         //成功插入数据层
         if (messageRepository.save(message)) {
@@ -48,7 +48,7 @@ public class MessageCommandServiceImpl implements MessageCommandService {
             String jsonStr = JSON.parse(messageDTO.toString()).toString();
 
             //在redis管道中发布消息
-            redisUtil.pub("broadcast-".concat(appId),jsonStr);
+            redisUtil.pub("broadcast-".concat(command.getAppId()),jsonStr);
 
             LogUtil.info("save user message: ".concat(jsonStr));
 

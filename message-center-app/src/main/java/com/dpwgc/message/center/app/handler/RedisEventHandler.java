@@ -3,6 +3,7 @@ package com.dpwgc.message.center.app.handler;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
+import com.dpwgc.message.center.sdk.base.ResultDTO;
 import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
@@ -15,7 +16,7 @@ import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Redis订阅发布监听器
+ * Redis订阅发布事件处理器
  */
 @Component
 public class RedisEventHandler implements MessageListener {
@@ -57,11 +58,11 @@ public class RedisEventHandler implements MessageListener {
                 //JSON对象转换成Java对象
                 MessageDTO messageDTO = JSONObject.toJavaObject(jsonObject, MessageDTO.class);
 
-                //如果消息与会话属于同一应用&&同一群组
-                if (messageDTO.getAppId().equals(session.getPathParameters().get("appId")) && messageDTO.getGroupId().equals(session.getPathParameters().get("groupId"))) {
+                //如果消息与会话属于同一应用
+                if (messageDTO.getAppId().equals(session.getPathParameters().get("appId"))) {
                     synchronized (session) {
-                        //推送消息
-                        session.getBasicRemote().sendText(JSON.parse(msg).toString());
+                        //推送消息给该应用的所有网关
+                        session.getBasicRemote().sendText(ResultDTO.getSuccessResult(messageDTO).setCode(2001).toString());
                     }
                 }
             } catch (IOException e) {

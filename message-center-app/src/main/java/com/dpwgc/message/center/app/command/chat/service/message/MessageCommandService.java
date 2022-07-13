@@ -5,7 +5,7 @@ import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageWsCommand;
 
 public interface MessageCommandService {
 
-    boolean createMessage(CreateMessageWsCommand command,String appId,String groupId,String userId);
+    boolean createMessage(CreateMessageWsCommand command);
 
     boolean createMessage(CreateMessageCommand command);
 

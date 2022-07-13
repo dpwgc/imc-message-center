@@ -19,9 +19,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
- * 即时通讯-聊天室连接
+ * 消息推送-与网关建立websocket连接
  */
-@ServerEndpoint("/chat/{appId}/{groupId}/{userId}")
+@ServerEndpoint("/chat/{appId}/{gatewayId}")
 @Component
 public class MessageWebSocket {
 
@@ -76,12 +76,12 @@ public class MessageWebSocket {
      * 建立连接成功调用
      */
     @OnOpen
-    public void onOpen(Session session, @PathParam(value = "appId") String appId, @PathParam(value = "groupId") String groupId,@PathParam(value = "userId") String userId) {
+    public void onOpen(Session session, @PathParam(value = "appId") String appId, @PathParam(value = "gatewayId") String gatewayId) {
 
-        //会话池的sessionKey由appId+groupId+userId组成
-        String sessionKey = appId.concat("-").concat(groupId).concat("-").concat(userId);
+        //会话池的sessionKey由appId+gatewayId组成
+        String sessionKey = appId.concat("-").concat(gatewayId);
 
-        sessionPools.put(sessionKey, session);//往websocket连接池里添加用户
+        sessionPools.put(sessionKey, session);//往websocket连接池里添加连接
 
         /*
          * === 设置监听器，监听在线消息 ===
@@ -101,15 +101,15 @@ public class MessageWebSocket {
             LogUtil.info("subscribed to redis channel: ".concat(redisMQKey));
         }
 
-        //回应客户端-连接成功
-        sendInfo(sessionKey,ResultDTO.getSuccessResult("").toString());
+        //回应网关-连接成功
+        sendInfo(sessionKey,ResultDTO.getSuccessResult("connection successful").setCode(2000).toString());
     }
 
     /**
      * 收到客户端信息
      */
     @OnMessage
-    public void onMessage(String msg, @PathParam(value = "appId") String appId, @PathParam(value = "groupId") String groupId,@PathParam(value = "userId") String userId) {
+    public void onMessage(String msg, @PathParam(value = "appId") String appId, @PathParam(value = "gatewayId") String gatewayId) {
 
         //JSON字符串转成JSON对象
         JSONObject jsonObject = (JSONObject) JSONObject.parse(msg);
@@ -120,14 +120,11 @@ public class MessageWebSocket {
         /**
          * 将消息插入mysql或消息队列 TODO
          */
-        String sessionKey = appId.concat("-").concat(groupId).concat("-").concat(userId);
+        String sessionKey = appId.concat("-").concat(gatewayId);
         //在数据层插入消息
-        if (messageCommandService.createMessage(command,appId,groupId,userId)) {
-            //回应客户端-消息发送成功
-            sendInfo(sessionKey,ResultDTO.getSuccessResult("").toString());
-        } else {
-            //回应客户端-消息发送失败
-            sendInfo(sessionKey,ResultDTO.getFailureResult("").toString());
+        if (!messageCommandService.createMessage(command)) {
+            //回应网关-消息发送失败
+            sendInfo(sessionKey,ResultDTO.getFailureResult(msg).setCode(4001).toString());
         }
     }
 
