@@ -1,5 +1,7 @@
 package com.dpwgc.message.center.sdk.base;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 public class ResultDTO<T> {
     protected boolean success;
     protected Integer code;
@@ -63,11 +65,10 @@ public class ResultDTO<T> {
 
     @Override
     public String toString() {
-        return "{" +
-                "success:" + success +
-                ", code:" + code +
-                ", message:'" + message + '\'' +
-                ", data:" + data +
-                '}';
+        try {
+            return JsonUtil.toJson(this);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

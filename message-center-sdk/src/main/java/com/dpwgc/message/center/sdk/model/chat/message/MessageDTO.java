@@ -56,20 +56,4 @@ public class MessageDTO {
      * 消息类型（自定义）
      */
     private Integer type;
-
-    @Override
-    public String toString() {
-        return "{" +
-                "messageId:'" + messageId + '\'' +
-                ", appId:'" + appId + '\'' +
-                ", groupId:'" + groupId + '\'' +
-                ", userId:'" + userId + '\'' +
-                ", content:'" + content + '\'' +
-                ", createTime:" + createTime +
-                ", recallTime:" + recallTime +
-                ", recallCause:'" + recallCause + '\'' +
-                ", status:" + status +
-                ", type:" + type +
-                '}';
-    }
 }
