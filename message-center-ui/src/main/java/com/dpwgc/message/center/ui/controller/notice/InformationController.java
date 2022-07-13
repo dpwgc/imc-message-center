@@ -30,7 +30,7 @@ public class InformationController {
     }
 
     @PostMapping("/delete")
-    public ResultDTO<String> deleteInformation(@Validated @RequestBody DeleteInformationCommand command) {
+    public ResultDTO<String> deleteInformation(@RequestBody DeleteInformationCommand command) {
         if (informationCommandService.deleteInformation(command.getInformationId())) {
             return ResultDTO.getSuccessResult("");
         }

@@ -24,7 +24,7 @@ public class MessageController {
     MessageCommandService messageCommandService;
 
     @PostMapping("/create")
-    public ResultDTO<String> createMessage(@Validated @RequestBody CreateMessageCommand command) {
+    public ResultDTO<String> createMessage(@RequestBody CreateMessageCommand command) {
 
         if (messageCommandService.createMessage(command)) {
             return ResultDTO.getSuccessResult("");
@@ -33,7 +33,7 @@ public class MessageController {
     }
 
     @PostMapping("/recall")
-    public ResultDTO<String> recallMessage(@Validated @RequestBody RecallMessageCommand command) {
+    public ResultDTO<String> recallMessage(@RequestBody RecallMessageCommand command) {
         if (messageCommandService.recallMessage(command.getMessageId(), command.getRecallCause())) {
             return ResultDTO.getSuccessResult("");
         }

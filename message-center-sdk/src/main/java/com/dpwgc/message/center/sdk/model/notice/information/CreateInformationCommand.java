@@ -1,11 +1,7 @@
 package com.dpwgc.message.center.sdk.model.notice.information;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class CreateInformationCommand {
 
