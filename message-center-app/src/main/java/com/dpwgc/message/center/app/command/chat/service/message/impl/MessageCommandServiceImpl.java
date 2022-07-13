@@ -63,12 +63,8 @@ public class MessageCommandServiceImpl implements MessageCommandService {
         Message message = messageRepository.recall(messageId,recallCause);
 
         if (message != null) {
-
-            //构建MessageDTO对象
-            MessageDTO messageDTO = messageAssembler.assembleMessageDTO(message);
-
             //广播消息
-            return broadcastUtil.broadcast(messageDTO);
+            return broadcastUtil.broadcast(messageAssembler.assembleMessageDTO(message));
         }
 
         return false;
