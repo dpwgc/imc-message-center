@@ -1,6 +1,5 @@
 package com.dpwgc.message.center.infrastructure.util;
 
-import com.alibaba.fastjson.JSON;
 import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +20,7 @@ public class BroadcastUtil {
 
         try {
             //将MessageDTO对象转为json字符串
-            String jsonStr = JSON.parse(messageDTO.toString()).toString();
+            String jsonStr = JsonUtil.toJson(messageDTO);
 
             //在redis管道中发布消息
             redisUtil.pub("broadcast-".concat(messageDTO.getAppId()),jsonStr);

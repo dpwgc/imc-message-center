@@ -1,11 +1,12 @@
 package com.dpwgc.message.center.ui.controller.chat;
 
-import com.alibaba.fastjson.JSONObject;
 import com.dpwgc.message.center.app.command.chat.service.message.MessageCommandService;
 import com.dpwgc.message.center.app.handler.RedisEventHandler;
+import com.dpwgc.message.center.infrastructure.util.JsonUtil;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import com.dpwgc.message.center.sdk.base.ResultDTO;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageWsCommand;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
@@ -97,13 +98,10 @@ public class MessageWebSocket {
      * 收到客户端信息
      */
     @OnMessage
-    public void onMessage(String msg, @PathParam(value = "appId") String appId, @PathParam(value = "gatewayId") String gatewayId) {
-
-        //JSON字符串转成JSON对象
-        JSONObject jsonObject = (JSONObject) JSONObject.parse(msg);
+    public void onMessage(String msg, @PathParam(value = "appId") String appId, @PathParam(value = "gatewayId") String gatewayId) throws JsonProcessingException {
 
         //JSON对象转换成Java对象
-        CreateMessageWsCommand command = JSONObject.toJavaObject(jsonObject, CreateMessageWsCommand.class);
+        CreateMessageWsCommand command = JsonUtil.fromJson(msg,CreateMessageWsCommand.class);
 
         //会话池的sessionKey由appId+gatewayId组成
         String sessionKey = appId.concat("-").concat(gatewayId);

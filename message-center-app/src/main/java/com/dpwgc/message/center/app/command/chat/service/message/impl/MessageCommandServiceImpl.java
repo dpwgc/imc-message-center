@@ -9,7 +9,6 @@ import com.dpwgc.message.center.infrastructure.util.BroadcastUtil;
 import com.dpwgc.message.center.infrastructure.util.IdGenUtil;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageCommand;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageWsCommand;
-import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

@@ -1,6 +1,6 @@
 package com.dpwgc.message.center.app.handler;
 
-import com.alibaba.fastjson.JSONObject;
+import com.dpwgc.message.center.infrastructure.util.JsonUtil;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import com.dpwgc.message.center.sdk.base.ResultDTO;
 import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
@@ -47,15 +47,13 @@ public class RedisEventHandler implements MessageListener {
             }
 
             try {
+                //LogUtil.info(msg);
                 //序列化字符串
-                String msgStr = StringEscapeUtils.unescapeJava(msg);
+                String msgStr = StringEscapeUtils.unescapeJava(msg);    //这里去除字符串中的转义符号（去除斜杠）
                 msgStr = StringUtils.strip(msgStr,"\"\""); //这里去除redis字符串两端的冒号
 
-                //JSON字符串转成JSON对象
-                JSONObject jsonObject = (JSONObject) JSONObject.parse(StringEscapeUtils.unescapeJava(msgStr));//这里使用StringEscapeUtils去除转义斜杠
-
-                //JSON对象转换成Java对象
-                MessageDTO messageDTO = JSONObject.toJavaObject(jsonObject, MessageDTO.class);
+                //JSON字符串转换成Java对象
+                MessageDTO messageDTO = JsonUtil.fromJson(msgStr,MessageDTO.class);
 
                 //如果消息与会话属于同一应用
                 if (messageDTO.getAppId().equals(session.getPathParameters().get("appId"))) {
