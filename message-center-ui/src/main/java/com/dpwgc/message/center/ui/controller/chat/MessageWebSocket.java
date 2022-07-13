@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 消息推送-与网关建立websocket连接
  */
-@ServerEndpoint("/chat/{appId}/{gatewayId}")
+@ServerEndpoint("/chat/message/broadcast/{appId}/{gatewayId}")
 @Component
 public class MessageWebSocket {
 
