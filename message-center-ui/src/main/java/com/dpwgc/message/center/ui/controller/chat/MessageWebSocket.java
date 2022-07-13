@@ -25,6 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class MessageWebSocket {
 
+    //消息写入服务（交由IOC自动注入）
     private static MessageCommandService messageCommandService;
 
     //Redis订阅监听器设置（交由IOC自动注入）
@@ -127,6 +128,13 @@ public class MessageWebSocket {
         session.close();
     }
 
+    /**
+     * 创建Redis监听器
+     * @param sessionKey 连接会话id（中台与网关的连接）
+     * @param appId 应用id
+     * @param session 会话
+     * @return boolean
+     */
     private boolean createListener(String sessionKey,String appId,Session session) {
 
         try {

@@ -38,12 +38,8 @@ public class MessageCommandServiceImpl implements MessageCommandService {
 
         //成功插入数据层
         if (messageRepository.save(message)) {
-
-            //构建MessageDTO对象
-            MessageDTO messageDTO = messageAssembler.assembleMessageDTO(message);
-
             //广播消息
-            return broadcastUtil.broadcast(messageDTO);
+            return broadcastUtil.broadcast(messageAssembler.assembleMessageDTO(message));
         }
         return false;
     }
@@ -57,12 +53,8 @@ public class MessageCommandServiceImpl implements MessageCommandService {
 
         //成功插入数据层
         if (messageRepository.save(message)) {
-
-            //构建MessageDTO对象
-            MessageDTO messageDTO = messageAssembler.assembleMessageDTO(message);
-
             //广播消息
-            return broadcastUtil.broadcast(messageDTO);
+            return broadcastUtil.broadcast(messageAssembler.assembleMessageDTO(message));
         }
         return false;
     }
