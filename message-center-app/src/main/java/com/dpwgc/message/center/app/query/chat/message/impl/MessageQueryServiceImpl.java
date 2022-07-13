@@ -39,6 +39,12 @@ public class MessageQueryServiceImpl implements MessageQueryService {
         List<MessageDTO> messageDTOList = new ArrayList<>();
         for (int i=0;i<messagePOPage.getRecords().size();i++) {
             MessageDTO messageDTO = MessageAssembler.INSTANCE.assembleMessageDTO(messagePOPage.getRecords().get(i));
+
+            //如果是已撤回的消息，则不返回主体信息
+            if (messageDTO.getStatus() == 0) {
+                messageDTO.setContent("");
+            }
+
             messageDTOList.add(messageDTO);
         }
 
@@ -67,6 +73,12 @@ public class MessageQueryServiceImpl implements MessageQueryService {
         List<MessageDTO> messageDTOList = new ArrayList<>();
         for (int i=0;i<messagePOPage.getRecords().size();i++) {
             MessageDTO messageDTO = MessageAssembler.INSTANCE.assembleMessageDTO(messagePOPage.getRecords().get(i));
+
+            //如果是已撤回的消息，则不返回主体信息
+            if (messageDTO.getStatus() == 0) {
+                messageDTO.setContent("");
+            }
+
             messageDTOList.add(messageDTO);
         }
 
@@ -96,6 +108,12 @@ public class MessageQueryServiceImpl implements MessageQueryService {
         List<MessageDTO> messageDTOList = new ArrayList<>();
         for (int i=0;i<messagePOPage.getRecords().size();i++) {
             MessageDTO messageDTO = MessageAssembler.INSTANCE.assembleMessageDTO(messagePOPage.getRecords().get(i));
+
+            //如果是已撤回的消息，则不返回主体信息
+            if (messageDTO.getStatus() == 0) {
+                messageDTO.setContent("");
+            }
+
             messageDTOList.add(messageDTO);
         }
 
@@ -135,6 +153,12 @@ public class MessageQueryServiceImpl implements MessageQueryService {
                 continue;
             }
             MessageDTO messageDTO = MessageAssembler.INSTANCE.assembleMessageDTO(messagePOPage.getRecords().get(i));
+
+            //如果是已撤回的消息，则不返回主体信息
+            if (messageDTO.getStatus() == 0) {
+                messageDTO.setContent("");
+            }
+
             messageDTOList.add(messageDTO);
         }
 
@@ -170,6 +194,12 @@ public class MessageQueryServiceImpl implements MessageQueryService {
                 continue;
             }
             MessageDTO messageDTO = MessageAssembler.INSTANCE.assembleMessageDTO(messagePOPage.getRecords().get(i));
+
+            //如果是已撤回的消息，则不返回主体信息
+            if (messageDTO.getStatus() == 0) {
+                messageDTO.setContent("");
+            }
+
             messageDTOList.add(messageDTO);
         }
 
