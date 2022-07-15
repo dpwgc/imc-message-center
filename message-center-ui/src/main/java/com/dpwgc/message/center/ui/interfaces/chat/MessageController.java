@@ -1,4 +1,4 @@
-package com.dpwgc.message.center.ui.controller.chat;
+package com.dpwgc.message.center.ui.interfaces.chat;
 
 import com.dpwgc.message.center.app.command.chat.service.message.MessageCommandService;
 import com.dpwgc.message.center.app.query.chat.message.MessageQueryService;

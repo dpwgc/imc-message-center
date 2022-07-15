@@ -1,12 +1,11 @@
-package com.dpwgc.message.center.ui.controller.chat;
+package com.dpwgc.message.center.ui.interfaces.chat;
 
 import com.dpwgc.message.center.app.command.chat.service.message.MessageCommandService;
-import com.dpwgc.message.center.app.handler.RedisEventHandler;
+import com.dpwgc.message.center.app.handler.RedisSubHandler;
 import com.dpwgc.message.center.infrastructure.util.JsonUtil;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import com.dpwgc.message.center.sdk.base.ResultDTO;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageWsCommand;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
@@ -43,7 +42,7 @@ public class MessageWebSocket {
     }
 
     //Redis订阅推送消息服务（设为静态，仅在本类加载时调用一次）
-    private static final RedisEventHandler redisEventHandler = new RedisEventHandler();
+    private static final RedisSubHandler REDIS_SUB_HANDLER = new RedisSubHandler();
 
     //记录Redis监听器，避免不同用户连接同一群组时重复创建订阅监听。
     private static final ConcurrentHashMap<String, Boolean> redisListenMap = new ConcurrentHashMap<>();
@@ -146,7 +145,7 @@ public class MessageWebSocket {
              * === 设置监听器，监听在线消息 ===
              */
             //将session传入Redis事件处理器（用于接收广播消息）
-            redisEventHandler.setSession(sessionKey,session);
+            REDIS_SUB_HANDLER.setSession(sessionKey,session);
 
             //设置Redis订阅/发布管道的key（broadcast-{appId}）
             //设置Redis订阅/发布监听器，监听推送到该应用的所有消息
@@ -154,7 +153,7 @@ public class MessageWebSocket {
 
             if (redisListenMap.get(redisChannelKey) == null) {
                 //如果当前这个主题没有被订阅，则建立订阅监听器。
-                redisMessageListenerContainer.addMessageListener(redisEventHandler,new PatternTopic(redisChannelKey));
+                redisMessageListenerContainer.addMessageListener(REDIS_SUB_HANDLER,new PatternTopic(redisChannelKey));
                 //redisListenMap：记录已订阅的监听管道，避免重复订阅
                 redisListenMap.put(redisChannelKey,true);
                 LogUtil.info("subscribed to redis channel: ".concat(redisChannelKey));

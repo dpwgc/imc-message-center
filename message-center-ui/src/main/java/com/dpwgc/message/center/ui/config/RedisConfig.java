@@ -1,6 +1,6 @@
 package com.dpwgc.message.center.ui.config;
 
-import com.dpwgc.message.center.app.handler.RedisEventHandler;
+import com.dpwgc.message.center.app.handler.RedisSubHandler;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,8 +35,8 @@ public class RedisConfig {
         return container;
     }
     @Bean
-    MessageListenerAdapter listenerAdapter(RedisEventHandler redisEventHandler) {
-        return new MessageListenerAdapter(redisEventHandler);
+    MessageListenerAdapter listenerAdapter(RedisSubHandler redisSubHandler) {
+        return new MessageListenerAdapter(redisSubHandler);
     }
 
     @Bean

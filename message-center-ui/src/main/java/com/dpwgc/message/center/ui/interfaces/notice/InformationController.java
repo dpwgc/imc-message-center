@@ -1,4 +1,4 @@
-package com.dpwgc.message.center.ui.controller.notice;
+package com.dpwgc.message.center.ui.interfaces.notice;
 
 import com.dpwgc.message.center.app.command.notice.service.information.InformationCommandService;
 import com.dpwgc.message.center.app.query.notice.information.InformationQueryService;
