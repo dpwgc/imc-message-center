@@ -1,5 +1,6 @@
 package com.dpwgc.message.center.infrastructure.util;
 
+import com.dpwgc.message.center.infrastructure.component.RedisClient;
 import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +10,7 @@ import javax.annotation.Resource;
 public class BroadcastUtil {
 
     @Resource
-    RedisUtil redisUtil;
+    RedisClient redisClient;
 
     /**
      * 广播消息
@@ -23,7 +24,7 @@ public class BroadcastUtil {
             String jsonStr = JsonUtil.toJson(messageDTO);
 
             //在redis管道中发布消息
-            redisUtil.pub("broadcast-".concat(messageDTO.getAppId()),jsonStr);
+            redisClient.pub("broadcast-".concat(messageDTO.getAppId()),jsonStr);
 
             LogUtil.info("broadcast message: ".concat(jsonStr));
 

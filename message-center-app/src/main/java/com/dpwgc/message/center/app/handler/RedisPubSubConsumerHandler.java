@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Redis订阅处理器
  */
 @Component
-public class RedisSubHandler implements MessageListener {
+public class RedisPubSubConsumerHandler implements MessageListener {
 
     //concurrent包的线程安全Set，用来存放每个客户端对应的WebSocket session对象。
     private static final ConcurrentHashMap<String, Session> sessionPools = new ConcurrentHashMap<>();
