@@ -26,7 +26,10 @@ public class MQUtil {
 
         //封装成redis stream的消息格式
         Map<String,Object> msg = new HashMap<>();
+        //消息对象
         msg.put("message",jsonStr);
+        //该消息的投放次数
+        msg.put("count",0);
 
         //向stream发送消息，stream名称：applicationName（imc-message-center）
         redisClient.addStream(applicationName,msg);

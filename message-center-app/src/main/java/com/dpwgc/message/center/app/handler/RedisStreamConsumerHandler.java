@@ -14,6 +14,8 @@ import org.springframework.data.redis.stream.StreamListener;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -28,12 +30,17 @@ public class RedisStreamConsumerHandler implements StreamListener<String, MapRec
     @Value("${spring.application.name}")
     private String applicationName;
 
+    @Value("${spring.redis.stream.maxRetryCount}")
+    private Integer maxRetryCount;
+
     @Override
     public void onMessage(MapRecord<String, String, String> entries) {
 
         try {
             //获取消息数据
             String msg = entries.getValue().get("message");
+            //获取该消息的投放次数
+            int count = Integer.parseInt(entries.getValue().get("count"));
 
             //序列化字符串
             String msgStr = StringEscapeUtils.unescapeJava(msg);    //这里去除字符串中的转义符号（去除斜杠）
@@ -42,9 +49,26 @@ public class RedisStreamConsumerHandler implements StreamListener<String, MapRec
             Message message = JsonUtil.fromJson(msgStr, Message.class);
 
             //将消息存入数据库
-            messageRepository.save(message);
+            if (!messageRepository.save(message)) {
 
-            //确认消费，删除消息
+                LogUtil.error("error inserting message into database: "+msgStr);
+
+                //消费失败-重试机制
+                if (count >= maxRetryCount) {
+                    //超过重试次数，彻底丢弃消息
+                    LogUtil.error("removal message: "+msgStr);
+                } else {
+                    //重新投送消息
+                    Map<String,Object> msgRetry = new HashMap<>();
+                    msgRetry.put("message",msg);
+                    //该消息的投放次数+1
+                    msgRetry.put("count",count+1);
+                    //重新向stream发送消息
+                    redisClient.addStream(applicationName,msgRetry);
+                }
+            }
+
+            //从stream中删除消息记录
             redisClient.delField(applicationName,entries.getId().getValue());
 
         } catch (Exception e) {

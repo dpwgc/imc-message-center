@@ -6,6 +6,7 @@ import com.dpwgc.message.center.domain.chat.message.MessageRepository;
 import com.dpwgc.message.center.infrastructure.assembler.MessagePOAssembler;
 import com.dpwgc.message.center.infrastructure.dal.chat.entity.MessagePO;
 import com.dpwgc.message.center.infrastructure.dal.chat.mapper.MessageMapper;
+import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,13 @@ public class MessageRepositoryImpl implements MessageRepository {
 
     @Override
     public boolean save(Message message) {
-        MessagePO messagePO = MessagePOAssembler.INSTANCE.assemblerMessagePO(message);
-        return messageMapper.insert(messagePO) > 0;
+        try {
+            MessagePO messagePO = MessagePOAssembler.INSTANCE.assemblerMessagePO(message);
+            return messageMapper.insert(messagePO) > 0;
+        } catch (Exception e) {
+            LogUtil.error(e.toString());
+            return false;
+        }
     }
     @Override
     public Message recall(String messageId,String recallCause) {
