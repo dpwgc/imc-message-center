@@ -3,7 +3,6 @@ package com.dpwgc.message.center.ui.config;
 import com.dpwgc.message.center.infrastructure.component.RedisClient;
 import com.dpwgc.message.center.app.handler.RedisStreamConsumerHandler;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
-import lombok.var;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,7 +47,7 @@ public class RedisStreamConfig {
 
     @Bean
     public Subscription subscription(RedisConnectionFactory factory) throws UnknownHostException {
-        var options = StreamMessageListenerContainer
+        StreamMessageListenerContainer.StreamMessageListenerContainerOptions options = StreamMessageListenerContainer
                 .StreamMessageListenerContainerOptions
                 .builder()
                 .pollTimeout(Duration.ofSeconds(1))
@@ -63,9 +62,9 @@ public class RedisStreamConfig {
         //初始化stream
         initStream(stream,consumerGroup);
 
-        var listenerContainer = StreamMessageListenerContainer.create(factory,options);
+        StreamMessageListenerContainer listenerContainer = StreamMessageListenerContainer.create(factory,options);
 
-        var subscription = listenerContainer.receiveAutoAck(Consumer.from(consumerGroup,consumerName),
+        Subscription subscription = listenerContainer.receiveAutoAck(Consumer.from(consumerGroup,consumerName),
                 StreamOffset.create(stream, ReadOffset.lastConsumed()), redisStreamConsumerHandler);
         listenerContainer.start();
         return subscription;
