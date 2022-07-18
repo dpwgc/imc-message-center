@@ -11,12 +11,9 @@ import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import com.dpwgc.message.center.infrastructure.util.MQUtil;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageCommand;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageWsCommand;
-import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class MessageCommandServiceImpl implements MessageCommandService {
