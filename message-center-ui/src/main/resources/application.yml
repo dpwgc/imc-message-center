@@ -26,6 +26,10 @@ spring:
         max-idle: 8
         min-idle: 0
         max-wait: 60s
+    # 消息队列配置
+    stream:
+      # 消费失败最大重试次数
+      maxRetryCount: 10
 
 # 集群配置（涉及雪花id生成与Redis Stream消息队列配置）
 cluster:
