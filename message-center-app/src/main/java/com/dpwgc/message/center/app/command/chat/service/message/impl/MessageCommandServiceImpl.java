@@ -39,16 +39,15 @@ public class MessageCommandServiceImpl implements MessageCommandService {
     @Override
     public boolean createMessage(CreateMessageWsCommand command) {
 
-        String sid = idGenUtil.nextIdString();
-
         //创建Message对象
         MessageFactory messageFactory = new MessageFactory();
-        Message message = messageFactory.create(sid,command.getAppId(),command.getGroupId(),command.getUserId(),command.getContent(),command.getType());
+        Message message = messageFactory.create(idGenUtil.nextIdString(),command.getAppId(),command.getGroupId(),command.getUserId(),command.getContent(),command.getType());
 
         try {
-            MessageDTO messageDTO = messageAssembler.assembleMessageDTO(message);
-            mqUtil.send(sid,messageDTO);
-            broadcastUtil.broadcast(messageDTO);
+            //发送消息至MQ
+            mqUtil.send(message);
+            //广播消息
+            broadcastUtil.broadcast(messageAssembler.assembleMessageDTO(message));
             return true;
         } catch (Exception e) {
             LogUtil.error(e.toString());
@@ -59,16 +58,15 @@ public class MessageCommandServiceImpl implements MessageCommandService {
     @Override
     public boolean createMessage(CreateMessageCommand command) {
 
-        String sid = idGenUtil.nextIdString();
-
         //创建Message对象
         MessageFactory messageFactory = new MessageFactory();
-        Message message = messageFactory.create(sid,command.getAppId(),command.getGroupId(),command.getUserId(),command.getContent(),command.getType());
+        Message message = messageFactory.create(idGenUtil.nextIdString(),command.getAppId(),command.getGroupId(),command.getUserId(),command.getContent(),command.getType());
 
         try {
-            MessageDTO messageDTO = messageAssembler.assembleMessageDTO(message);
-            mqUtil.send(sid,messageDTO);
-            broadcastUtil.broadcast(messageDTO);
+            //发送消息至MQ
+            mqUtil.send(message);
+            //广播消息
+            broadcastUtil.broadcast(messageAssembler.assembleMessageDTO(message));
             return true;
         } catch (Exception e) {
             LogUtil.error(e.toString());

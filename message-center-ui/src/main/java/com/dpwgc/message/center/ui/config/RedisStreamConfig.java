@@ -75,7 +75,7 @@ public class RedisStreamConfig {
         boolean hasKey = redisClient.hasKey(key);
         if(!hasKey){
             Map<String,Object> map = new HashMap<>();
-            map.put("field","value");
+            map.put("message","init");
             RecordId recordId = redisClient.addStream(key, map);
             redisClient.addGroup(key,group);
             //将初始化的值删除掉
