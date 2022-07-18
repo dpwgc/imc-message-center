@@ -3,6 +3,7 @@ package com.dpwgc.message.center.app.handler;
 import com.dpwgc.message.center.domain.chat.message.Message;
 import com.dpwgc.message.center.domain.chat.message.MessageRepository;
 import com.dpwgc.message.center.infrastructure.component.RedisClient;
+import com.dpwgc.message.center.infrastructure.util.GzipUtil;
 import com.dpwgc.message.center.infrastructure.util.JsonUtil;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -37,26 +38,29 @@ public class RedisStreamConsumerHandler implements StreamListener<String, MapRec
     public void onMessage(MapRecord<String, String, String> entries) {
 
         try {
-            //获取消息数据
+            //获取消息数据（压缩数据）
             String msg = entries.getValue().get("message");
+            //解压消息数据
+            msg = GzipUtil.uncompress(msg);
+
             //获取该消息的投放次数
             int count = Integer.parseInt(entries.getValue().get("count"));
 
             //序列化字符串
-            String msgStr = StringEscapeUtils.unescapeJava(msg);    //这里去除字符串中的转义符号（去除斜杠）
-            msgStr = StringUtils.strip(msgStr,"\"\""); //这里去除redis字符串两端的冒号
+            String jsonStr = StringEscapeUtils.unescapeJava(msg);  //这里去除字符串中的转义符号（去除斜杠）
+            jsonStr = StringUtils.strip(jsonStr,"\"\""); //这里去除redis字符串两端的冒号
 
-            Message message = JsonUtil.fromJson(msgStr, Message.class);
+            Message message = JsonUtil.fromJson(jsonStr, Message.class);
 
             //将消息存入数据库
             if (!messageRepository.save(message)) {
 
-                LogUtil.error("error inserting message into database: "+msgStr);
+                LogUtil.error("error inserting message into database: "+jsonStr);
 
                 //消费失败-重试机制
                 if (count >= maxRetryCount) {
                     //超过重试次数，彻底丢弃消息
-                    LogUtil.error("removal message: "+msgStr);
+                    LogUtil.error("removal message: "+jsonStr);
                 } else {
                     //重新投送消息
                     Map<String,Object> msgRetry = new HashMap<>();

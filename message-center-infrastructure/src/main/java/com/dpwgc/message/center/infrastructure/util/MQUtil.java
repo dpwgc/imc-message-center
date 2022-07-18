@@ -24,10 +24,13 @@ public class MQUtil {
         //将MessageDTO对象转为json字符串
         String jsonStr = JsonUtil.toJson(message);
 
+        //压缩处理
+        String zipStr = GzipUtil.compress(jsonStr);
+
         //封装成redis stream的消息格式
         Map<String,Object> msg = new HashMap<>();
         //消息对象
-        msg.put("message",jsonStr);
+        msg.put("message",zipStr);
         //该消息的投放次数
         msg.put("count",0);
 

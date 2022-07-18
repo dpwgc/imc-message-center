@@ -23,8 +23,11 @@ public class BroadcastUtil {
             //将MessageDTO对象转为json字符串
             String jsonStr = JsonUtil.toJson(messageDTO);
 
+            //压缩处理
+            String zipStr = GzipUtil.compress(jsonStr);
+
             //在redis管道中发布消息
-            redisClient.pub("broadcast-".concat(messageDTO.getAppId()),jsonStr);
+            redisClient.pub("broadcast-".concat(messageDTO.getAppId()),zipStr);
 
             return true;
 

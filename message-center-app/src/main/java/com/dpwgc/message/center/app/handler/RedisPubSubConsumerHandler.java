@@ -1,5 +1,6 @@
 package com.dpwgc.message.center.app.handler;
 
+import com.dpwgc.message.center.infrastructure.util.GzipUtil;
 import com.dpwgc.message.center.infrastructure.util.JsonUtil;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import com.dpwgc.message.center.sdk.base.ResultDTO;
@@ -31,7 +32,10 @@ public class RedisPubSubConsumerHandler implements MessageListener {
     @Override
     public void onMessage(Message message, byte[] pattern) {
 
-        String msg = new String(message.getBody()); //消息内容（MessageDTO - JSON字符串）
+        //消息内容（MessageDTO - 压缩字符串）
+        String msg = new String(message.getBody());
+        //解压消息数据（MessageDTO - JSON字符串）
+        msg = GzipUtil.uncompress(msg);
 
         //遍历当前在线的会话key列表
         for (String sessionKey: sessionPools.keySet()) {
@@ -47,13 +51,12 @@ public class RedisPubSubConsumerHandler implements MessageListener {
             }
 
             try {
-                //LogUtil.info(msg);
                 //序列化字符串
-                String msgStr = StringEscapeUtils.unescapeJava(msg);    //这里去除字符串中的转义符号（去除斜杠）
-                msgStr = StringUtils.strip(msgStr,"\"\""); //这里去除redis字符串两端的冒号
+                String jsonStr = StringEscapeUtils.unescapeJava(msg); //这里去除字符串中的转义符号（去除斜杠）
+                jsonStr = StringUtils.strip(jsonStr,"\"\""); //这里去除redis字符串两端的冒号
 
                 //JSON字符串转换成Java对象
-                MessageDTO messageDTO = JsonUtil.fromJson(msgStr,MessageDTO.class);
+                MessageDTO messageDTO = JsonUtil.fromJson(jsonStr,MessageDTO.class);
 
                 //如果消息与会话属于同一应用
                 if (messageDTO.getAppId().equals(session.getPathParameters().get("appId"))) {
