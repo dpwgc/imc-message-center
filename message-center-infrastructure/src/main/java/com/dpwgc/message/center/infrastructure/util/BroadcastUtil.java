@@ -17,7 +17,7 @@ public class BroadcastUtil {
      * @param messageDTO 消息数据
      * @return boolean
      */
-    public boolean broadcast(MessageDTO messageDTO) {
+    public boolean send(MessageDTO messageDTO) {
 
         try {
             //将MessageDTO对象转为json字符串
@@ -25,8 +25,6 @@ public class BroadcastUtil {
 
             //在redis管道中发布消息
             redisClient.pub("broadcast-".concat(messageDTO.getAppId()),jsonStr);
-
-            LogUtil.info("broadcast message: ".concat(jsonStr));
 
             return true;
 
