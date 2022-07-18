@@ -12,7 +12,7 @@
 ### 项目架构
 * 基础架构：基于 Spring Boot 结合 DDD 领域驱动设计及 CQRS 架构实现（代码层面实现读写分离，底层数据存储不分离）
 * 数据库：MariaDB（可换成 MySQL，两者通用）
-* 消息队列：Redis订阅/发布管道
+* 消息队列：Redis Stream
 * 分布式消息广播推送：基于 Redis 订阅/发布功能 + Spring WebSocket 实现
 
 ***
