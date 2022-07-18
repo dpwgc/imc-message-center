@@ -27,8 +27,8 @@ spring:
         min-idle: 0
         max-wait: 60s
 
-# 雪花id配置
-snowflake:
+# 集群配置（涉及雪花id生成与Redis Stream消息队列配置）
+cluster:
   # 数据中心id
   datacenterId: 1
   # 机器id
