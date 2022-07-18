@@ -11,6 +11,7 @@ import com.dpwgc.message.center.infrastructure.util.LogUtil;
 import com.dpwgc.message.center.infrastructure.util.MQUtil;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageCommand;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageWsCommand;
+import com.dpwgc.message.center.sdk.model.chat.message.MessageDTO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -45,10 +46,9 @@ public class MessageCommandServiceImpl implements MessageCommandService {
         Message message = messageFactory.create(sid,command.getAppId(),command.getGroupId(),command.getUserId(),command.getContent(),command.getType());
 
         try {
-            Map<String,Object> msg = new HashMap<>();
-            msg.put(sid,message);
-            mqUtil.send(sid,msg);
-            broadcastUtil.broadcast(messageAssembler.assembleMessageDTO(message));
+            MessageDTO messageDTO = messageAssembler.assembleMessageDTO(message);
+            mqUtil.send(sid,messageDTO);
+            broadcastUtil.broadcast(messageDTO);
             return true;
         } catch (Exception e) {
             LogUtil.error(e.toString());
@@ -66,10 +66,9 @@ public class MessageCommandServiceImpl implements MessageCommandService {
         Message message = messageFactory.create(sid,command.getAppId(),command.getGroupId(),command.getUserId(),command.getContent(),command.getType());
 
         try {
-            Map<String,Object> msg = new HashMap<>();
-            msg.put(sid,message);
-            mqUtil.send(sid,msg);
-            broadcastUtil.broadcast(messageAssembler.assembleMessageDTO(message));
+            MessageDTO messageDTO = messageAssembler.assembleMessageDTO(message);
+            mqUtil.send(sid,messageDTO);
+            broadcastUtil.broadcast(messageDTO);
             return true;
         } catch (Exception e) {
             LogUtil.error(e.toString());
