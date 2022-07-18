@@ -51,10 +51,10 @@ public class IdGenUtil implements ApplicationContextAware {
     private final long datacenterIdShift = sequenceBits + workerIdBits;
     private final long timestampShift = sequenceBits + workerIdBits + datacenterIdBits;
 
-    @Value("${snowflake.datacenterId}")
+    @Value("${cluster.datacenterId}")
     private long datacenterId; // 数据中心ID
 
-    @Value("${snowflake.workerId}")
+    @Value("${cluster.workerId}")
     private long workerId; // 机器ID
 
     private long sequence = 0L; // 序列号
