@@ -5,7 +5,7 @@
 本项目是对 https://github.com/dpwgc/fast-im 项目的重构
 （由 MVC 架构转为 DDD + CQRS 架构）
 
-### [HTTP接口文档：API.md](./API.md)
+### [HTTP接口文档：HTTP_API.md](./HTTP_API.md)
 ### [WebSocket连接文档：WS.md](./WS.md)
 ***
 
@@ -25,6 +25,21 @@
 
 ***
 
+### 架构图与流程图
+* 部署架构图
+![avatar](./img/cluster.png)
+可以部署多个IMC通讯中台，所有中台连接到同一个Redis和MariaDB源，每个中台连接任意数量的网关（自行分配）。
+
+* 消息发送与撤回流程
+![avatar](./img/message.png)
+用户在APP端或者Web端发出消息，消息传入网关（用户端与网关请自行实现，本项目主要关注网关与中台的连接）。
+网关再通过WebSocket连接将消息传入IMC通讯中台（连接方式见文档WS.md）。
+中台将消息写入Redis Stream消息队列，然后再通过Redis Pub/Sub广播消息给所有持有相同appId的IMC通讯中台节点。
+各个IMC通讯中台节点收到广播发来的消息后，再把这个消息推送给与自己连接的网关。
+各个网关收到IMC通讯中台推送的消息后，再将消息推送给用户（该步骤自行实现）。
+
+***
+
 ### 项目结构
 
 #### 垂直分层
@@ -34,6 +49,8 @@
 * message-center-app `应用层（对下层传来的对象进行业务处理，再传给上层）`
 * message-center-domain `领域层（负责组装基础服务层传来的数据对象）`
 * message-center-infrastructure `基础服务层（包括数据库交互、缓存交互以及一些工具类）`
+
+![avatar](./img/ddd.png)
 
 #### 水平分区
 
