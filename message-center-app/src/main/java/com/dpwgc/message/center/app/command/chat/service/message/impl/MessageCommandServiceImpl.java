@@ -44,7 +44,7 @@ public class MessageCommandServiceImpl implements MessageCommandService {
             //发送消息至MQ
             mqUtil.send(message);
             //广播消息
-            broadcastUtil.broadcast(messageAssembler.assembleMessageDTO(message));
+            broadcastUtil.send(messageAssembler.assembleMessageDTO(message));
             return true;
         } catch (Exception e) {
             LogUtil.error(e.toString());
@@ -63,7 +63,7 @@ public class MessageCommandServiceImpl implements MessageCommandService {
             //发送消息至MQ
             mqUtil.send(message);
             //广播消息
-            broadcastUtil.broadcast(messageAssembler.assembleMessageDTO(message));
+            broadcastUtil.send(messageAssembler.assembleMessageDTO(message));
             return true;
         } catch (Exception e) {
             LogUtil.error(e.toString());
@@ -77,7 +77,7 @@ public class MessageCommandServiceImpl implements MessageCommandService {
         if (message != null) {
             if (message.getStatus() == 0) {
                 //广播消息
-                return broadcastUtil.broadcast(messageAssembler.assembleMessageDTO(message));
+                return broadcastUtil.send(messageAssembler.assembleMessageDTO(message));
             }
         }
 

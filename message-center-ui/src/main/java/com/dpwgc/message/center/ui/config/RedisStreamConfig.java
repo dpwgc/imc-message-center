@@ -39,10 +39,10 @@ public class RedisStreamConfig {
     @Value("${spring.application.name}")
     private String applicationName;
 
-    @Value("${snowflake.datacenterId}")
+    @Value("${cluster.datacenterId}")
     private String datacenterId;
 
-    @Value("${snowflake.workerId}")
+    @Value("${cluster.workerId}")
     private String workerId;
 
     @Bean
@@ -53,7 +53,7 @@ public class RedisStreamConfig {
                 .pollTimeout(Duration.ofSeconds(1))
                 .build();
 
-        //消费者组（应用名称 imc-message-center）
+        //消费者组名称（应用名称 imc-message-center）
         String consumerGroup = applicationName;
         //消费者名称（应用名称+数据中心id+机器id+地址+端口）
         String consumerName = applicationName + "-" + datacenterId + "-" + workerId + "-" + Inet4Address.getLocalHost().getHostAddress() + ":" + port;
