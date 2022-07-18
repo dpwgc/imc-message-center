@@ -1,6 +1,6 @@
 package com.dpwgc.message.center.ui.config;
 
-import com.dpwgc.message.center.app.handler.RedisSubHandler;
+import com.dpwgc.message.center.app.handler.RedisPubSubConsumerHandler;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,8 +35,8 @@ public class RedisConfig {
         return container;
     }
     @Bean
-    MessageListenerAdapter listenerAdapter(RedisSubHandler redisSubHandler) {
-        return new MessageListenerAdapter(redisSubHandler);
+    MessageListenerAdapter listenerAdapter(RedisPubSubConsumerHandler redisPubSubConsumerHandler) {
+        return new MessageListenerAdapter(redisPubSubConsumerHandler);
     }
 
     @Bean
@@ -58,6 +58,7 @@ public class RedisConfig {
         template.setValueSerializer(jackson2JsonRedisSerializer);
         // hash的value序列化方式采用jackson
         template.setHashValueSerializer(jackson2JsonRedisSerializer);
+        template.setDefaultSerializer(jackson2JsonRedisSerializer);
         template.afterPropertiesSet();
         return template;
     }

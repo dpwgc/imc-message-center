@@ -7,14 +7,21 @@ import com.dpwgc.message.center.domain.chat.message.MessageFactory;
 import com.dpwgc.message.center.domain.chat.message.MessageRepository;
 import com.dpwgc.message.center.infrastructure.util.BroadcastUtil;
 import com.dpwgc.message.center.infrastructure.util.IdGenUtil;
+import com.dpwgc.message.center.infrastructure.util.LogUtil;
+import com.dpwgc.message.center.infrastructure.util.MQUtil;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageCommand;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageWsCommand;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class MessageCommandServiceImpl implements MessageCommandService {
+
+    @Resource
+    MQUtil mqUtil;
 
     @Resource
     IdGenUtil idGenUtil;
@@ -31,31 +38,43 @@ public class MessageCommandServiceImpl implements MessageCommandService {
     @Override
     public boolean createMessage(CreateMessageWsCommand command) {
 
+        String sid = idGenUtil.nextIdString();
+
         //创建Message对象
         MessageFactory messageFactory = new MessageFactory();
-        Message message = messageFactory.create(idGenUtil.nextIdString(),command.getAppId(),command.getGroupId(),command.getUserId(),command.getContent(),command.getType());
+        Message message = messageFactory.create(sid,command.getAppId(),command.getGroupId(),command.getUserId(),command.getContent(),command.getType());
 
-        //成功插入数据层
-        if (messageRepository.save(message)) {
-            //广播消息
-            return broadcastUtil.broadcast(messageAssembler.assembleMessageDTO(message));
+        try {
+            Map<String,Object> msg = new HashMap<>();
+            msg.put(sid,message);
+            mqUtil.send(sid,msg);
+            broadcastUtil.broadcast(messageAssembler.assembleMessageDTO(message));
+            return true;
+        } catch (Exception e) {
+            LogUtil.error(e.toString());
+            return false;
         }
-        return false;
     }
 
     @Override
     public boolean createMessage(CreateMessageCommand command) {
 
+        String sid = idGenUtil.nextIdString();
+
         //创建Message对象
         MessageFactory messageFactory = new MessageFactory();
-        Message message = messageFactory.create(idGenUtil.nextIdString(),command.getAppId(),command.getGroupId(),command.getUserId(),command.getContent(),command.getType());
+        Message message = messageFactory.create(sid,command.getAppId(),command.getGroupId(),command.getUserId(),command.getContent(),command.getType());
 
-        //成功插入数据层
-        if (messageRepository.save(message)) {
-            //广播消息
-            return broadcastUtil.broadcast(messageAssembler.assembleMessageDTO(message));
+        try {
+            Map<String,Object> msg = new HashMap<>();
+            msg.put(sid,message);
+            mqUtil.send(sid,msg);
+            broadcastUtil.broadcast(messageAssembler.assembleMessageDTO(message));
+            return true;
+        } catch (Exception e) {
+            LogUtil.error(e.toString());
+            return false;
         }
-        return false;
     }
 
     public boolean recallMessage(String messageId,String recallCause) {
