@@ -26,12 +26,26 @@ spring:
         max-idle: 8
         min-idle: 0
         max-wait: 60s
-    # 消息队列配置
+    # redis stream 消息队列配置
     stream:
       # 消费失败最大重试次数
       maxRetryCount: 10
 
-# 集群配置（涉及雪花id生成与Redis Stream消息队列配置）
+  # elasticsearch配置
+  elasticsearch:
+    uris: http://127.0.0.1:9200
+    username:
+    password:
+    # 索引
+    index:
+      # 聊天消息数据索引
+      chat:
+        message: imc_chat_message
+      # 通知信息索引
+      notice:
+        information: imc_notice_information
+
+# IMC-Message-Center集群配置（涉及雪花id生成与Redis Stream消息队列配置）
 cluster:
   # 数据中心id
   datacenterId: 1
