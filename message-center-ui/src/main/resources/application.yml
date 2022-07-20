@@ -4,7 +4,7 @@ server:
 
 spring:
   application:
-    # 应用名称
+    # 中台名称
     name: imc-message-center
 
   # 数据源配置（默认使用mariadb，也可换成mysql，两者通用）

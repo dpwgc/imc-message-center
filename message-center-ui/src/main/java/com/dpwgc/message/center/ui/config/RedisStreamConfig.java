@@ -53,11 +53,11 @@ public class RedisStreamConfig {
                 .pollTimeout(Duration.ofSeconds(1))
                 .build();
 
-        //消费者组名称（应用名称 imc-message-center）
+        //消费者组名称（中台名称 imc-message-center）
         String consumerGroup = applicationName;
-        //消费者名称（应用名称+数据中心id+机器id+地址+端口）
+        //消费者名称（中台名称+数据中心id+机器id+地址+端口）
         String consumerName = applicationName + "-" + datacenterId + "-" + workerId + "-" + Inet4Address.getLocalHost().getHostAddress() + ":" + port;
-        //stream名称（应用名称 imc-message-center）
+        //stream名称（中台名称 imc-message-center）
         String stream = applicationName;
         //初始化stream
         initStream(stream,consumerGroup);
