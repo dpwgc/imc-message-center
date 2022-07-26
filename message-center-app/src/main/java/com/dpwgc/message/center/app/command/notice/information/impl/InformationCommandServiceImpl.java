@@ -1,6 +1,6 @@
-package com.dpwgc.message.center.app.command.notice.service.information.impl;
+package com.dpwgc.message.center.app.command.notice.information.impl;
 
-import com.dpwgc.message.center.app.command.notice.service.information.InformationCommandService;
+import com.dpwgc.message.center.app.command.notice.information.InformationCommandService;
 import com.dpwgc.message.center.domain.notice.information.Information;
 import com.dpwgc.message.center.domain.notice.information.InformationFactory;
 import com.dpwgc.message.center.domain.notice.information.InformationRepository;

@@ -1,7 +1,7 @@
-package com.dpwgc.message.center.app.command.chat.service.message.impl;
+package com.dpwgc.message.center.app.command.chat.message.impl;
 
 import com.dpwgc.message.center.app.assembler.MessageAssembler;
-import com.dpwgc.message.center.app.command.chat.service.message.MessageCommandService;
+import com.dpwgc.message.center.app.command.chat.message.MessageCommandService;
 import com.dpwgc.message.center.domain.chat.message.Message;
 import com.dpwgc.message.center.domain.chat.message.MessageFactory;
 import com.dpwgc.message.center.domain.chat.message.MessageRepository;

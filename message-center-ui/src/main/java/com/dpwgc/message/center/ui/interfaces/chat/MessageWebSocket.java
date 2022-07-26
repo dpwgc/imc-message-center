@@ -1,6 +1,6 @@
 package com.dpwgc.message.center.ui.interfaces.chat;
 
-import com.dpwgc.message.center.app.command.chat.service.message.MessageCommandService;
+import com.dpwgc.message.center.app.command.chat.message.MessageCommandService;
 import com.dpwgc.message.center.app.handler.RedisPubSubConsumerHandler;
 import com.dpwgc.message.center.infrastructure.util.JsonUtil;
 import com.dpwgc.message.center.infrastructure.util.LogUtil;

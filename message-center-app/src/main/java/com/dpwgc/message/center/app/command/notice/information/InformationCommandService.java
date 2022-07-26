@@ -1,4 +1,4 @@
-package com.dpwgc.message.center.app.command.notice.service.information;
+package com.dpwgc.message.center.app.command.notice.information;
 
 import com.dpwgc.message.center.sdk.model.notice.information.CreateInformationCommand;
 

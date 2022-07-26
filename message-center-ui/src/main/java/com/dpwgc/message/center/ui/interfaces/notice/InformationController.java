@@ -1,6 +1,6 @@
 package com.dpwgc.message.center.ui.interfaces.notice;
 
-import com.dpwgc.message.center.app.command.notice.service.information.InformationCommandService;
+import com.dpwgc.message.center.app.command.notice.information.InformationCommandService;
 import com.dpwgc.message.center.app.query.notice.information.InformationQueryService;
 import com.dpwgc.message.center.sdk.base.ResultDTO;
 import com.dpwgc.message.center.sdk.model.notice.information.CreateInformationCommand;

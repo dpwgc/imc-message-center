@@ -1,6 +1,6 @@
 package com.dpwgc.message.center.ui.interfaces.chat;
 
-import com.dpwgc.message.center.app.command.chat.service.message.MessageCommandService;
+import com.dpwgc.message.center.app.command.chat.message.MessageCommandService;
 import com.dpwgc.message.center.app.query.chat.message.MessageQueryService;
 import com.dpwgc.message.center.sdk.base.ResultDTO;
 import com.dpwgc.message.center.sdk.model.chat.message.CreateMessageCommand;
